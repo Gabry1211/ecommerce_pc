@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.sql.Time;
 
 public class Prodotto {
+	private int idProdotto;
 	private String descrizione, tipo, immagine;
     private double prezzo;
     private String cfAdmin, cfCliente;
@@ -12,8 +13,9 @@ public class Prodotto {
     private Time oraAcquisto, oraConsegna;
 
     // Costruttori diversi per admin e venditore
-    public Prodotto(String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore) {
-        this.descrizione = descrizione;
+    public Prodotto(int idProdotto, String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore) {
+        this.idProdotto = idProdotto;
+    	this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.tipo = tipo;
         this.immagine = immagine;
@@ -24,6 +26,10 @@ public class Prodotto {
     }
 
     // Getter
+    public int getIdProdotto() {
+    	return idProdotto;
+    }
+    
     public String getDescrizione() {
     	return descrizione;
     }
