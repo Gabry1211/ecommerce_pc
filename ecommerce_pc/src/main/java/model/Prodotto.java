@@ -61,5 +61,23 @@ public class Prodotto {
     public Time getOraAcquisto() {
     	return oraAcquisto;
     }
+    
+//    Setter
+    
+    public void setIdProdotto(int idProdotto) {
+    	this.idProdotto = idProdotto;
+    }
+    
+    public void setDescrizione(String descrizione) {
+    	this.descrizione = descrizione;
+    }
+    
+    public void setPrezzo(double prezzo) {
+    	this.prezzo = prezzo;
+    }
+    
+    public void setTipo(String tipo) {
+    	this.tipo = tipo;
+    }
 
 }

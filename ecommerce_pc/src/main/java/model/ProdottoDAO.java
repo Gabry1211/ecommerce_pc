@@ -1,6 +1,8 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProdottoDAO {
 		public void aggiungiProdotto(Prodotto p) throws SQLException {
@@ -20,5 +22,29 @@ public class ProdottoDAO {
 
 	        ps.executeUpdate();
 	        conn.close();
+	    }
+		
+		public List<Prodotto> doRetrieveAll() {
+	        List<Prodotto> prodotti = new ArrayList<>();
+
+	        try (Connection con = DBConnection.getConnection();
+	             PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto")) {
+
+	            ResultSet rs = ps.executeQuery();
+
+	            while (rs.next()) {
+	                Prodotto p = new Prodotto(0, null, 0, null, null, null, 0);
+	                p.setIdProdotto(rs.getInt("id"));
+	                p.setDescrizione(rs.getString("descrizione"));
+	                p.setPrezzo(rs.getDouble("prezzo"));
+	                p.setTipo(rs.getString("tipo"));
+	                prodotti.add(p);
+	            }
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        return prodotti;
 	    }
 	}
