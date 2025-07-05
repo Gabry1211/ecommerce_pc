@@ -47,4 +47,20 @@ public class ProdottoDAO {
 
 	        return prodotti;
 	    }
+		
+		public void doSave(Prodotto p) {
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(
+		             "INSERT INTO prodotto (descrizione, prezzo, tipo) VALUES (?, ?, ?)")) {
+
+		        ps.setString(1, p.getDescrizione());
+		        ps.setDouble(2, p.getPrezzo());
+		        ps.setString(3, p.getTipo());
+
+		        ps.executeUpdate();
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
 	}
