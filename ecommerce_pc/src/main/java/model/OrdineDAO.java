@@ -1,9 +1,11 @@
 package model;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.math.BigDecimal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OrdineDAO {
@@ -48,5 +50,30 @@ public class OrdineDAO {
             }
         }
     }
+    
+    public List<Ordine> getOrdiniByCodiceFiscale(String codiceFiscale) {
+        List<Ordine> lista = new ArrayList<>();
+        String sql = "SELECT * FROM Ordine WHERE Codice_Fiscale = ?";
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, codiceFiscale);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ordine o = new Ordine();
+                o.setIdOrdine(rs.getInt("ID_Ordine"));
+                o.setListaProdotti(rs.getString("Lista_Prodotti"));
+                o.setTotale(rs.getDouble("Tot_Ordine"));
+                o.setIdAssistenza(rs.getInt("ID_Assistenza"));
+                o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
+                lista.add(o);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return lista;
+    }
+
 
 }
