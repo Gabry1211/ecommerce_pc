@@ -3,12 +3,12 @@
 <%@ page import="jakarta.servlet.*" %>
 <!DOCTYPE html>
 <%
-    HttpSession session2 = request.getSession(false);
-    if (session == null || session.getAttribute("venditore") == null) {
-        response.sendRedirect("login.jsp");
-        return;
-    }
-    int idVenditore = (Integer) session.getAttribute("venditore");
+model.Venditore venditore = (model.Venditore) session.getAttribute("venditore");
+if (venditore == null) {
+    response.sendRedirect("login.jsp");
+    return;
+}
+int idVenditore = venditore.getIdVenditore();
 %>
 <html>
 <head>
