@@ -18,5 +18,12 @@
         Password: <input type="password" name="password" required><br>
         <input type="submit" value="Registrati">
     </form>
+    
+    <p>Non sei registrato?</p>
+<ul>
+  <li><a href="registrazione.jsp">Registrati come cliente</a></li>
+  <li><a href="registrazioneVenditore.jsp">Registrati come venditore</a></li>
+</ul>
+    
 </body>
 </html>
