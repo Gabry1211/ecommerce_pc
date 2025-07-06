@@ -35,7 +35,7 @@ public class LoginVenditoreServlet extends HttpServlet {
 	            ResultSet rs = stmt.executeQuery();
 
 	            if (rs.next()) {
-	                HttpSessionw session = request.getSession();
+	                HttpSession session = request.getSession();
 	                session.setAttribute("venditore", idVenditore);
 	                response.sendRedirect("venditoreHome.jsp");
 	            } else {
