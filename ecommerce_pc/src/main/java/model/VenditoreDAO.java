@@ -32,7 +32,7 @@ public class VenditoreDAO {
 	        try (ResultSet rs = ps.executeQuery()) {
 	            if (rs.next()) {
 	                Venditore v = new Venditore();
-	                v.setIdVenditore(rs.getInt("ID"));
+	                v.setIdVenditore(rs.getInt("ID_Venditore"));
 	                v.setNome(rs.getString("Nome"));
 	                v.setPartitaIVA(rs.getString("Partita_IVA"));
 	                v.setCodiceFiscale(rs.getString("Codice_Fiscale"));
