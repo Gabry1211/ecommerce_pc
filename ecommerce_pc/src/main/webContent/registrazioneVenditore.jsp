@@ -1,28 +1,22 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-  <title>Registrazione Venditore</title>
-</head>
-<body>
-  <h2>Registrati come Venditore</h2>
-  <form action="RegistrazioneVenditoreServlet" method="post">
+<%@ include file="fragments/header.jsp" %>
+
+<h2>Registrazione Venditore</h2>
+
+<form action="RegistrazioneVenditoreServlet" method="post">
     <label for="nome">Nome:</label><br>
-    <input type="text" name="nome" required><br><br>
+    <input type="text" id="nome" name="nome" required><br><br>
 
-    <label for="cognome">Cognome:</label><br>
-    <input type="text" name="cognome" required><br><br>
+    <label for="partitaIva">Partita IVA:</label><br>
+    <input type="text" id="partitaIva" name="partitaIva" required pattern="^[0-9]{11}$"><br><br>
 
-    <label for="email">Email:</label><br>
-    <input type="email" name="email" required><br><br>
-
-    <label for="password">Password:</label><br>
-    <input type="password" name="password" required><br><br>
+    <label for="codiceFiscale">Codice Fiscale:</label><br>
+    <input type="text" id="codiceFiscale" name="codiceFiscale" required pattern="^[A-Z0-9]{16}$"><br><br>
 
     <input type="submit" value="Registrati">
-  </form>
+</form>
 
-  <p><a href="login.jsp">Torna al login</a></p>
-</body>
-</html>
+<%@ include file="fragments/footer.jsp" %>
+

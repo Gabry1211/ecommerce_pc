@@ -21,39 +21,34 @@ public class RegistrazioneVenditoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String nome = request.getParameter("nome");
-	        String cognome = request.getParameter("cognome");
-	        String email = request.getParameter("email");
-	        String password = request.getParameter("password");
+		String nome = request.getParameter("nome");
+        String partitaIva = request.getParameter("partitaIva");
+        String codiceFiscale = request.getParameter("codiceFiscale");
 
-	        try {
-	            Connection conn = DBConnection.getConnection();
+        Connection conn = null;
+        PreparedStatement stmt = null;
 
-	            String sql = "INSERT INTO Venditore (Nome, Cognome, Email) VALUES (?, ?, ?)";
-	            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-	            ps.setString(1, nome);
-	            ps.setString(2, cognome);
-	            ps.setString(3, email);
-	            ps.executeUpdate();
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercepc?useSSL=false", "root", "password");
 
-	            ResultSet generatedKeys = ps.getGeneratedKeys();
-	            int idVenditore = 0;
-	            if (generatedKeys.next()) {
-	                idVenditore = generatedKeys.getInt(1);
-	            }
+            String sql = "INSERT INTO Venditore (Nome, Partita_IVA, Codice_Fiscale) VALUES (?, ?, ?)";
+            stmt = conn.prepareStatement(sql);
+            stmt.setString(1, nome);
+            stmt.setString(2, partitaIva);
+            stmt.setString(3, codiceFiscale);
 
-	            String sqlLogin = "INSERT INTO Login (ID_Venditore, Password) VALUES (?, ?)";
-	            PreparedStatement psLogin = conn.prepareStatement(sqlLogin);
-	            psLogin.setInt(1, idVenditore);
-	            psLogin.setString(2, password);
-	            psLogin.executeUpdate();
+            stmt.executeUpdate();
+            response.sendRedirect("login.jsp");
 
-	            conn.close();
-	            response.sendRedirect("login.jsp");
-
-	        } catch (Exception e) {
-	            throw new ServletException("Errore registrazione venditore", e);
-	        }
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("errore", "Registrazione fallita.");
+            request.getRequestDispatcher("registrazioneVenditore.jsp").forward(request, response);
+        } finally {
+            try { if (stmt != null) stmt.close(); } catch (Exception ignored) {}
+            try { if (conn != null) conn.close(); } catch (Exception ignored) {}
+        }
 	}
 
 }
