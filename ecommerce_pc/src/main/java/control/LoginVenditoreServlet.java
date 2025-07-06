@@ -30,7 +30,7 @@ public class LoginVenditoreServlet extends HttpServlet {
 	            if (v != null) {
 	                HttpSession session = request.getSession();
 	                session.setAttribute("venditore", v);
-	                response.sendRedirect("homepageVenditore.jsp");
+	                response.sendRedirect("venditoreHome.jsp");
 	            } else {
 	                response.sendRedirect("loginVenditore.jsp?errore=1");
 	            }
