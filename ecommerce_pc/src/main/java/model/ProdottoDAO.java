@@ -80,4 +80,18 @@ public class ProdottoDAO {
 		        e.printStackTrace();
 		    }
 		}
+		
+		public void doDelete(int idProdotto) {
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(
+		             "DELETE FROM prodotto WHERE id = ?")) {
+
+		        ps.setInt(1, idProdotto);
+		        ps.executeUpdate();
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
+		
 	}
