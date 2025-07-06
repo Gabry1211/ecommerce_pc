@@ -24,7 +24,7 @@ public class LoginClienteServlet extends HttpServlet {
 
 	        try {
 	            Context initContext = new InitialContext();
-	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/ecommerceDB");
+	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/sito");
 	            Connection conn = ds.getConnection();
 
 	            String query = "SELECT * FROM Login WHERE Codice_Fiscale_Cliente = ? AND Password = ?";

@@ -22,7 +22,7 @@ public class LoginAdminServlet extends HttpServlet {
 
 	        try {
 	            Context initContext = new InitialContext();
-	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/ecommerceDB");
+	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/sito");
 	            Connection
 	            conn = ds.getConnection();
 
