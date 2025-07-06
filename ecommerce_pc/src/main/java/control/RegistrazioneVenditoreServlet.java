@@ -24,7 +24,7 @@ public class RegistrazioneVenditoreServlet extends HttpServlet {
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		  String nome = request.getParameter("nome");
-	        String partitaIVA = request.getParameter("partitaIVA");
+	        String partitaIVA = request.getParameter("partitaIva");
 	        String codiceFiscale = request.getParameter("codiceFiscale");
 
 	        Venditore v = new Venditore();
