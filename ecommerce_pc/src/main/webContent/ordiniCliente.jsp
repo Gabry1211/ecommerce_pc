@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
-    <%@ include file="includes/header.jsp" %>
+    <%@ include file="fragments/header.jsp" %>>
 
     <h2>I tuoi ordini</h2>
     <%
@@ -44,6 +44,6 @@
         }
     %>
 
-    <%@ include file="includes/footer.jsp" %>
+    <%@ include file="fragments/footer.jsp" %>>
 </body>
 </html>
