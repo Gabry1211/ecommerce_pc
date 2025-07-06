@@ -8,44 +8,36 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
+import model.Venditore;
+import model.VenditoreDAO;
+
 import java.io.IOException;
-
-import java.sql.*;
-import javax.naming.*;
-
-import javax.sql.DataSource;
+import java.sql.SQLException;
 
 @WebServlet("/LoginVenditoreServlet")
 public class LoginVenditoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 int idVenditore = Integer.parseInt(request.getParameter("idVenditore"));
-	        String password = request.getParameter("password");
+		 String partitaIVA = request.getParameter("partitaIVA");
+	        String codiceFiscale = request.getParameter("codiceFiscale");
+
+	        VenditoreDAO dao = new VenditoreDAO();
 
 	        try {
-	            Context initContext = new InitialContext();
-	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/sito");
-	            Connection conn = ds.getConnection();
+	            Venditore v = dao.autenticaVenditore(partitaIVA, codiceFiscale);
 
-	            String query = "SELECT * FROM Login WHERE ID_Venditore = ? AND Password = ?";
-	            PreparedStatement stmt = conn.prepareStatement(query);
-	            stmt.setInt(1, idVenditore);
-	            stmt.setString(2, password);
-	            ResultSet rs = stmt.executeQuery();
-
-	            if (rs.next()) {
+	            if (v != null) {
 	                HttpSession session = request.getSession();
-	                session.setAttribute("venditore", idVenditore);
-	                response.sendRedirect("venditoreHome.jsp");
+	                session.setAttribute("venditore", v);
+	                response.sendRedirect("homepageVenditore.jsp");
 	            } else {
-	                request.setAttribute("erroreLogin", "Credenziali errate");
-	                request.getRequestDispatcher("loginVenditore.jsp").forward(request, response);
+	                response.sendRedirect("loginVenditore.jsp?errore=1");
 	            }
 
-	            conn.close();
-	        } catch (Exception e) {
-	            throw new ServletException("Errore login venditore", e);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            response.sendRedirect("errore.jsp");
 	        }
 	}
 
