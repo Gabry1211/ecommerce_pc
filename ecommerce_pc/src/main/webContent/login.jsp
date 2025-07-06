@@ -12,5 +12,8 @@
         Password: <input type="password" name="password" required><br>
         <input type="submit" value="Login">
     </form>
+    
+    <p>Sei un amministratore? <a href="loginAdmin.jsp">Accedi come Admin</a></p>
+	<p>Sei un venditore? <a href="loginVenditore.jsp">Accedi come Venditore</a></p>
 </body>
 </html>
