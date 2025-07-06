@@ -6,6 +6,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import model.DBConnection;
+
 import java.io.IOException;
 
 import java.sql.*;
@@ -25,9 +27,7 @@ public class RegistrazioneVenditoreServlet extends HttpServlet {
 	        String password = request.getParameter("password");
 
 	        try {
-	            Context initContext = new InitialContext();
-	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/ecommerceDB");
-	            Connection conn = ds.getConnection();
+	            Connection conn = DBConnection.getConnection();
 
 	            String sql = "INSERT INTO Venditore (Nome, Cognome, Email) VALUES (?, ?, ?)";
 	            PreparedStatement ps = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
