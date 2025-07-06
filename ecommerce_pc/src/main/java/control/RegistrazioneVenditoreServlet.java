@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.DBConnection;
+import model.Venditore;
+import model.VenditoreDAO;
 
 import java.io.IOException;
 
@@ -21,34 +23,23 @@ public class RegistrazioneVenditoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String nome = request.getParameter("nome");
-        String partitaIva = request.getParameter("partitaIva");
-        String codiceFiscale = request.getParameter("codiceFiscale");
+		  String nome = request.getParameter("nome");
+	        String partitaIVA = request.getParameter("partitaIVA");
+	        String codiceFiscale = request.getParameter("codiceFiscale");
 
-        Connection conn = null;
-        PreparedStatement stmt = null;
+	        Venditore v = new Venditore();
+	        v.setNome(nome);
+	        v.setPartitaIVA(partitaIVA);
+	        v.setCodiceFiscale(codiceFiscale);
 
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommercepc?useSSL=false", "root", "password");
-
-            String sql = "INSERT INTO Venditore (Nome, Partita_IVA, Codice_Fiscale) VALUES (?, ?, ?)";
-            stmt = conn.prepareStatement(sql);
-            stmt.setString(1, nome);
-            stmt.setString(2, partitaIva);
-            stmt.setString(3, codiceFiscale);
-
-            stmt.executeUpdate();
-            response.sendRedirect("login.jsp");
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            request.setAttribute("errore", "Registrazione fallita.");
-            request.getRequestDispatcher("registrazioneVenditore.jsp").forward(request, response);
-        } finally {
-            try { if (stmt != null) stmt.close(); } catch (Exception ignored) {}
-            try { if (conn != null) conn.close(); } catch (Exception ignored) {}
-        }
+	        VenditoreDAO dao = new VenditoreDAO();
+	        try {
+	            dao.registraVenditore(v);
+	            response.sendRedirect("login.jsp");
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	            response.sendRedirect("errore.jsp");
+	        }
 	}
 
 }

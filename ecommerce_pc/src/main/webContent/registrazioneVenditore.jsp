@@ -10,10 +10,10 @@
     <input type="text" id="nome" name="nome" required><br><br>
 
     <label for="partitaIva">Partita IVA:</label><br>
-    <input type="text" id="partitaIva" name="partitaIva" required pattern="^[0-9]{11}$"><br><br>
+    <input type="text" id="partitaIva" name="partitaIva"><br><br>
 
     <label for="codiceFiscale">Codice Fiscale:</label><br>
-    <input type="text" id="codiceFiscale" name="codiceFiscale" required pattern="^[A-Z0-9]{16}$"><br><br>
+    <input type="text" id="codiceFiscale" name="codiceFiscale"><br><br>
 
     <input type="submit" value="Registrati">
 </form>
