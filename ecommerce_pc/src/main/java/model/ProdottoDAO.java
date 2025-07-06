@@ -63,4 +63,21 @@ public class ProdottoDAO {
 		        e.printStackTrace();
 		    }
 		}
+		
+		public void doUpdate(Prodotto p) {
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(
+		             "UPDATE prodotto SET descrizione = ?, prezzo = ?, tipo = ? WHERE id = ?")) {
+
+		        ps.setString(1, p.getDescrizione());
+		        ps.setDouble(2, p.getPrezzo());
+		        ps.setString(3, p.getTipo());
+		        ps.setInt(4, p.getIdProdotto());
+
+		        ps.executeUpdate();
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		}
 	}
