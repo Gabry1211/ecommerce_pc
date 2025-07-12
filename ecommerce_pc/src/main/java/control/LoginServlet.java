@@ -23,7 +23,7 @@ public class LoginServlet extends HttpServlet {
 
             if (rs.next()) {
                 HttpSession session = request.getSession();
-                session.setAttribute("utente", cf);
+                session.setAttribute("cliente", cf);
                 response.sendRedirect("clienteHome.jsp");
             } else {
                 response.getWriter().write("Credenziali non valide.");
