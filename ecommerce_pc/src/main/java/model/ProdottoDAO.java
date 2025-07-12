@@ -33,7 +33,7 @@ public class ProdottoDAO {
 	            ResultSet rs = ps.executeQuery();
 
 	            while (rs.next()) {
-	                Prodotto p = new Prodotto(0, null, 0, null, null, null, 0);
+	                Prodotto p = new Prodotto(0, null, null, 0, null, null, null, 0);
 	                p.setIdProdotto(rs.getInt("id"));
 	                p.setDescrizione(rs.getString("descrizione"));
 	                p.setPrezzo(rs.getDouble("prezzo"));
@@ -104,7 +104,7 @@ public class ProdottoDAO {
 
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
-		            Prodotto p = new Prodotto(idVenditore, null, idVenditore, null, null, null, idVenditore);
+		            Prodotto p = new Prodotto(idVenditore, null, null, idVenditore, null, null, null, idVenditore);
 		            p.setIdProdotto(rs.getInt("id_prodotto"));
 		            p.setDescrizione(rs.getString("descrizione"));
 		            p.setPrezzo(rs.getDouble("prezzo"));
@@ -117,5 +117,40 @@ public class ProdottoDAO {
 
 		    return prodotti;
 		}
+		
+		public List<Prodotto> cercaProdotti(String keyword, String categoria, double minPrezzo, double maxPrezzo) {
+		    List<Prodotto> prodotti = new ArrayList<>();
+
+		    try (Connection con = DBConnection.getConnection()) {
+		        String query = "SELECT * FROM prodotto WHERE nome LIKE ? AND prezzo BETWEEN ? AND ?";
+		        if (categoria != null && !categoria.isEmpty())
+		            query += " AND categoria = ?";
+
+		        PreparedStatement ps = con.prepareStatement(query);
+		        ps.setString(1, "%" + keyword + "%");
+		        ps.setDouble(2, minPrezzo);
+		        ps.setDouble(3, maxPrezzo);
+
+		        if (categoria != null && !categoria.isEmpty())
+		            ps.setString(4, categoria);
+
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            Prodotto p = new Prodotto(0, query, query, maxPrezzo, query, query, query, 0);
+		            p.setIdProdotto(rs.getInt("id"));
+		            p.setNome(rs.getString("nome"));
+		            p.setPrezzo(rs.getDouble("prezzo"));
+		            p.setDescrizione(rs.getString("descrizione"));
+		            // Aggiungi altri campi se servono
+		            prodotti.add(p);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return prodotti;
+		}
+
 
 	}
