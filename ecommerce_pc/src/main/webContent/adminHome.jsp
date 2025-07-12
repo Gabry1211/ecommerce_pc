@@ -17,7 +17,7 @@
 
     <ul>
         <li><a href="inserisciProdotto.jsp">Inserisci Prodotto</a></li>
-        <li><a href="visualizzaOrdini.jsp">Visualizza Ordini</a></li>
+        <li><a href="adminVisualizzaOrdini.jsp">Visualizza Ordini</a></li>
         <li><a href="logout.jsp">Logout</a></li>
     </ul>
 </body>

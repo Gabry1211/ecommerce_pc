@@ -9,6 +9,11 @@ import java.util.List;
 import java.util.Map;
 
 public class OrdineDAO {
+	
+	public OrdineDAO() {
+		
+	}
+	
 	public OrdineDAO(Connection conn) throws SQLException {
 		conn = DBConnection.getConnection();
     }
@@ -73,6 +78,62 @@ public class OrdineDAO {
             e.printStackTrace();
         }
         return lista;
+    }
+    
+    public List<Ordine> doRetrieveAll() {
+        List<Ordine> ordini = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ordini.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+    public List<Ordine> doRetrieveByCliente(String codiceFiscale) {
+        List<Ordine> ordini = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine WHERE Codice_Fiscale = ?");
+            ps.setString(1, codiceFiscale);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ordini.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+    public List<Ordine> doRetrieveByData(String from, String to) {
+        List<Ordine> ordini = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM Ordine WHERE Data_Assistenza BETWEEN ? AND ?");
+            ps.setString(1, from);
+            ps.setString(2, to);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                ordini.add(mapRow(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+    private Ordine mapRow(ResultSet rs) throws SQLException {
+        Ordine o = new Ordine();
+        o.setIdOrdine(rs.getInt("ID_Ordine"));
+        o.setListaProdotti(rs.getString("Lista_Prodotti"));
+        o.setTotale(rs.getDouble("Tot_Ordine"));
+        o.setIdAssistenza(rs.getInt("ID_Assistenza"));
+        o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
+        return o;
     }
 
 
