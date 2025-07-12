@@ -94,4 +94,28 @@ public class ProdottoDAO {
 		    }
 		}
 		
+		public List<Prodotto> doRetrieveByVenditore(int idVenditore) {
+		    List<Prodotto> prodotti = new ArrayList<>();
+
+		    try (Connection con = DBConnection.getConnection()) {
+		        PreparedStatement ps = con.prepareStatement(
+		            "SELECT * FROM prodotto WHERE id_venditore = ?");
+		        ps.setInt(1, idVenditore);
+
+		        ResultSet rs = ps.executeQuery();
+		        while (rs.next()) {
+		            Prodotto p = new Prodotto(idVenditore, null, idVenditore, null, null, null, idVenditore);
+		            p.setIdProdotto(rs.getInt("id_prodotto"));
+		            p.setDescrizione(rs.getString("descrizione"));
+		            p.setPrezzo(rs.getDouble("prezzo"));
+		            p.setTipo(rs.getString("quantita"));
+		            prodotti.add(p);
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return prodotti;
+		}
+
 	}
