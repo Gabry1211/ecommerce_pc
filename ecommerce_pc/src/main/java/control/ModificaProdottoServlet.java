@@ -18,11 +18,12 @@ public class ModificaProdottoServlet extends HttpServlet {
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("idProdotto"));
-        String descrizione = request.getParameter("descrizione");
+        String nome = request.getParameter("nome");
+		String descrizione = request.getParameter("descrizione");
         double prezzo = Double.parseDouble(request.getParameter("prezzo"));
         String tipo = request.getParameter("tipo");
 
-        Prodotto prodotto = new Prodotto(id, descrizione, prezzo, tipo, "", "", 0);
+        Prodotto prodotto = new Prodotto(id, nome, descrizione, prezzo, tipo, "", "", 0);
         
 
         ProdottoDAO dao = new ProdottoDAO();

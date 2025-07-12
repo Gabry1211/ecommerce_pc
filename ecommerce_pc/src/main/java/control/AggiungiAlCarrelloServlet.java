@@ -14,6 +14,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int idProdotto = Integer.parseInt(request.getParameter("idProdotto"));
+		String nome = request.getParameter("nome");
 		String descrizione = request.getParameter("descrizione");
 		double prezzo = Double.parseDouble("prezzo");
 		String tipo = request.getParameter("tipo");
@@ -30,7 +31,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
         }
 
         try {
-            Prodotto p = new Prodotto(idProdotto, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore);
+            Prodotto p = new Prodotto(idProdotto, nome, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore);
             carrello.aggiungiProdotto(p);
             response.sendRedirect("carrello.jsp");
         } catch (Exception e) {

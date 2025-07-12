@@ -16,6 +16,7 @@ public class InserisciProdotooServlet extends HttpServlet {
        
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("idProdotto"));
+		String nome = request.getParameter("nome");
 		String descrizione = request.getParameter("descrizione");
         double prezzo = Double.parseDouble(request.getParameter("prezzo"));
         String tipo = request.getParameter("tipo");
@@ -28,10 +29,10 @@ public class InserisciProdotooServlet extends HttpServlet {
         try {
             Prodotto p;
             if (cfAdmin != null) {
-                p = new Prodotto(id, descrizione, prezzo, tipo, immagine, cfAdmin, 0);
+                p = new Prodotto(id, nome, descrizione, prezzo, tipo, immagine, cfAdmin, 0);
             } else if (idVenditoreStr != null) {
                 int idVenditore = Integer.parseInt(idVenditoreStr);
-                p = new Prodotto(id, descrizione, prezzo, tipo, immagine, null, idVenditore);
+                p = new Prodotto(id, nome, descrizione, prezzo, tipo, immagine, null, idVenditore);
             } else {
                 response.sendRedirect("login.jsp");
                 return;

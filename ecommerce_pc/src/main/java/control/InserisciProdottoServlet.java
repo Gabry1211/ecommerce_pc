@@ -19,7 +19,7 @@ public class InserisciProdottoServlet extends HttpServlet {
         double prezzo = Double.parseDouble(request.getParameter("prezzo"));
         String tipo = request.getParameter("tipo");
 
-        Prodotto prodotto = new Prodotto(0, "", prezzo, "", "", tipo, 0);
+        Prodotto prodotto = new Prodotto(0, "", "", prezzo, "", "", tipo, 0);
         prodotto.setDescrizione(descrizione);
         prodotto.setPrezzo(prezzo);
         prodotto.setTipo(tipo);
