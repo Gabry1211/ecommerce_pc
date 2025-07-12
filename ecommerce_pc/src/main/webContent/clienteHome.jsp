@@ -1,9 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ page import="jakarta.servlet.*" %>
-<!DOCTYPE html>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="jakarta.servlet.http.*,jakarta.servlet.*" %>
+<!DOCTYPE html>
+
 <%
     HttpSession sessione = request.getSession(false);
     if (sessione == null || sessione.getAttribute("cliente") == null) {
