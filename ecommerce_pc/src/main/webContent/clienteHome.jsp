@@ -4,8 +4,8 @@
 <!DOCTYPE html>
 
 <%
-    HttpSession sessione = request.getSession(false);
-    if (sessione == null || sessione.getAttribute("cliente") == null) {
+    HttpSession session2 = request.getSession(false);
+    if (session2 == null || session2.getAttribute("cliente") == null) {
         response.sendRedirect("login.jsp");
         return;
     }
