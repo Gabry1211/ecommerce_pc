@@ -1,3 +1,12 @@
+function mostraErrore(idCampo, messaggio) {
+    document.getElementById(idCampo + "Errore").innerText = messaggio;
+}
+
+function pulisciErrore(idCampo) {
+    document.getElementById(idCampo + "Errore").innerText = "";
+}
+
+
 function validaRegistrazione() {
     let valido = true;
 
@@ -113,6 +122,31 @@ function validaRegistrazioneVenditore() {
         valido = false;
     } else {
         pulisciErrore("password");
+    }
+
+    return valido;
+}
+
+function validaLoginVenditore() {
+    let valido = true;
+
+    const partitaIVA = document.getElementById("partitaIVA").value.trim();
+    const password = document.getElementById("passwordVenditore").value.trim();
+
+    const regexPIva = /^[0-9]{11}$/;
+
+    if (!regexPIva.test(partitaIVA)) {
+        mostraErrore("partitaIVA", "Inserisci una Partita IVA valida (11 cifre).");
+        valido = false;
+    } else {
+        pulisciErrore("partitaIVA");
+    }
+
+    if (password.length < 6) {
+        mostraErrore("passwordVenditore", "La password deve contenere almeno 6 caratteri.");
+        valido = false;
+    } else {
+        pulisciErrore("passwordVenditore");
     }
 
     return valido;
