@@ -2,6 +2,7 @@ package model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ClienteDao {
@@ -27,4 +28,26 @@ public class ClienteDao {
 	        conn.close();
 	
 	}
+		
+		public Cliente getClienteByEmailAndPassword(String email, String password) {
+		    Cliente cliente = null;
+		    try (Connection con = DBConnection.getConnection()) {
+		        PreparedStatement ps = con.prepareStatement("SELECT * FROM Cliente WHERE Email = ? AND Password = ?");
+		        ps.setString(1, email);
+		        ps.setString(2, password);
+		        ResultSet rs = ps.executeQuery();
+		        if (rs.next()) {
+		            cliente = new Cliente(password, password, null, password, password);
+		            cliente.set_codiceFiscale(rs.getString("Codice_Fiscale"));
+		            cliente.set_nome(rs.getString("Nome"));
+		            cliente.set_email(rs.getString("Email"));
+		            cliente.set_indirizzo(rs.getString("Indirizzo"));
+		            // ... altri campi
+		        }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    return cliente;
+		}
+
 }

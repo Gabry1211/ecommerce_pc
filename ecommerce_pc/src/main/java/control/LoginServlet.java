@@ -4,6 +4,9 @@ import jakarta.servlet.ServletException;
 
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+import model.Cliente;
+import model.ClienteDao;
+
 import java.io.IOException;
 import java.sql.*;
 
@@ -12,26 +15,21 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String cf = request.getParameter("codiceFiscale");
-        String pw = request.getParameter("password");
+		HttpSession session = request.getSession();
+		
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
 
-        try (Connection conn = model.DBConnection.getConnection()) {
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM Login WHERE Codice_Fiscale_Cliente = ? AND Password = ?");
-            ps.setString(1, cf);
-            ps.setString(2, pw);
-            ResultSet rs = ps.executeQuery();
+		ClienteDao clienteDAO = new ClienteDao();
+		Cliente cliente = clienteDAO.getClienteByEmailAndPassword(email, password);
 
-            if (rs.next()) {
-                HttpSession session = request.getSession();
-                session.setAttribute("cliente", cf);
-                response.sendRedirect("clienteHome.jsp");
-            } else {
-                response.getWriter().write("Credenziali non valide.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            response.getWriter().write("Errore login.");
-        }
+		if (cliente != null) {
+		    session.setAttribute("cliente", cliente);
+		    response.sendRedirect("clienteHome.jsp");
+		} else {
+		    request.setAttribute("errore", "Credenziali non valide.");
+		    request.getRequestDispatcher("login.jsp").forward(request, response);
+		}
 	}
 
 }
