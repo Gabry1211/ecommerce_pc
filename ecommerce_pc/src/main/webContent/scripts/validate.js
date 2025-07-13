@@ -75,3 +75,45 @@ function validaLoginCliente() {
 
     return valido;
 }
+
+function validaRegistrazioneVenditore() {
+    let valido = true;
+
+    const nome = document.getElementById("nome").value.trim();
+    const partitaIva = document.getElementById("partitaIva").value.trim();
+    const codiceFiscale = document.getElementById("codiceFiscale").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const regexCF = /^[A-Z]{6}[0-9]{2}[A-Z][0-9]{2}[A-Z][0-9]{3}[A-Z]$/i;
+    const regexPIva = /^[0-9]{11}$/;
+
+    if (nome.length < 2) {
+        mostraErrore("nome", "Inserisci un nome valido.");
+        valido = false;
+    } else {
+        pulisciErrore("nome");
+    }
+
+    if (!regexPIva.test(partitaIva)) {
+        mostraErrore("partitaIva", "Inserisci una Partita IVA valida (11 cifre).");
+        valido = false;
+    } else {
+        pulisciErrore("partitaIva");
+    }
+
+    if (!regexCF.test(codiceFiscale)) {
+        mostraErrore("codiceFiscale", "Inserisci un Codice Fiscale valido.");
+        valido = false;
+    } else {
+        pulisciErrore("codiceFiscale");
+    }
+
+    if (password.length < 6) {
+        mostraErrore("password", "La password deve contenere almeno 6 caratteri.");
+        valido = false;
+    } else {
+        pulisciErrore("password");
+    }
+
+    return valido;
+}
