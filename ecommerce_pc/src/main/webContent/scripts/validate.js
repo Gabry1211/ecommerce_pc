@@ -151,3 +151,29 @@ function validaLoginVenditore() {
 
     return valido;
 }
+
+function validaLoginAdmin() {
+    let valido = true;
+
+    const codiceFiscale = document.getElementById("codiceFiscale").value.trim();
+    const password = document.getElementById("passwordAdmin").value.trim();
+
+    // Codice fiscale: 16 caratteri alfanumerici (lettere maiuscole + numeri)
+    const regexCF = /^[A-Z0-9]{16}$/;
+
+    if (!regexCF.test(codiceFiscale)) {
+        mostraErrore("codiceFiscale", "Inserisci un codice fiscale valido (16 caratteri maiuscoli e numeri).");
+        valido = false;
+    } else {
+        pulisciErrore("codiceFiscale");
+    }
+
+    if (password.length < 6) {
+        mostraErrore("passwordAdmin", "La password deve contenere almeno 6 caratteri.");
+        valido = false;
+    } else {
+        pulisciErrore("passwordAdmin");
+    }
+
+    return valido;
+}
