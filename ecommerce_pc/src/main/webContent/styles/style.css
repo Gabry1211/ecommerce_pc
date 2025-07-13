@@ -1,0 +1,7 @@
+@charset "UTF-8";
+
+.errore {
+    color: red;
+    font-size: 0.9em;
+    margin-left: 10px;
+}

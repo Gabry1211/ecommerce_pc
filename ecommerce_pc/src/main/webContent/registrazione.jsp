@@ -10,13 +10,25 @@
 <body>
     <h2>Registrati</h2>
     <form action="RegistrazioneServlet" method="post" onsubmit="return validaRegistrazione()">
-        Codice Fiscale: <input type="text" name="codiceFiscale" required><br>
-        Nome: <input type="text" name="nome" required><br>
-        Data di nascita: <input type="date" name="dataNascita" required><br>
-        Email: <input type="email" name="email" required><br>
-        Indirizzo: <input type="text" name="indirizzo" required><br>
-        Password: <input type="password" name="password" required><br>
-        <input type="submit" value="Registrati">
+        Codice Fiscale: <input type="text" id="codiceFiscale" name="codiceFiscale" required>
+    <span id="erroreCodiceFiscale" class="errore"></span><br>
+
+    Nome: <input type="text" id="nome" name="nome" required>
+    <span id="erroreNome" class="errore"></span><br>
+
+    Data di nascita: <input type="date" id="dataNascita" name="dataNascita" required>
+    <span id="erroreDataNascita" class="errore"></span><br>
+
+    Email: <input type="email" id="email" name="email" required>
+    <span id="erroreEmail" class="errore"></span><br>
+
+    Indirizzo: <input type="text" id="indirizzo" name="indirizzo" required>
+    <span id="erroreIndirizzo" class="errore"></span><br>
+
+    Password: <input type="password" id="password" name="password" required>
+    <span id="errorePassword" class="errore"></span><br>
+
+    <input type="submit" value="Registrati">
     </form>
     
     <p>Non sei registrato?</p>
