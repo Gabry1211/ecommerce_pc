@@ -19,26 +19,22 @@ public class LoginVenditoreServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String partitaIVA = request.getParameter("partitaIVA");
-	        String codiceFiscale = request.getParameter("codiceFiscale");
+		HttpSession session = request.getSession();
+		
+		String partitaIVA = request.getParameter("partitaIVA");
+		String password = request.getParameter("password");
 
-	        VenditoreDAO dao = new VenditoreDAO();
+		VenditoreDAO dao = new VenditoreDAO();
+		Venditore venditore = dao.getVenditoreByPartitaIVAAndPassword(partitaIVA, password);
 
-	        try {
-	            Venditore v = dao.autenticaVenditore(partitaIVA, codiceFiscale);
+		if (venditore != null) {
+		    session.setAttribute("venditore", venditore);
+		    response.sendRedirect("venditoreHome.jsp");
+		} else {
+		    request.setAttribute("errore", "Credenziali non valide");
+		    request.getRequestDispatcher("loginVenditore.jsp").forward(request, response);
+		}
 
-	            if (v != null) {
-	                HttpSession session = request.getSession();
-	                session.setAttribute("venditore", v);
-	                response.sendRedirect("venditoreHome.jsp");
-	            } else {
-	                response.sendRedirect("loginVenditore.jsp?errore=1");
-	            }
-
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	            response.sendRedirect("errore.jsp");
-	        }
 	}
 
 }

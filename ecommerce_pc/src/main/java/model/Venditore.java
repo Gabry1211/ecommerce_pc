@@ -5,6 +5,7 @@ public class Venditore {
     private String nome;
     private String partitaIVA;
     private String codiceFiscale;
+    private String password;
 
     // Getters e Setters
     public int getIdVenditore() {
@@ -37,6 +38,14 @@ public class Venditore {
 
     public void setCodiceFiscale(String codiceFiscale) {
         this.codiceFiscale = codiceFiscale;
+    }
+    
+    public String getPassword() {
+    	return password;
+    }
+    
+    public void setPassword(String password) {
+    	this.password = password;
     }
 
 }
