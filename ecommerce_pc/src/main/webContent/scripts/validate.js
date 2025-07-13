@@ -50,3 +50,28 @@ function validaRegistrazione() {
 
     return valido;
 }
+
+function validaLoginCliente() {
+    let valido = true;
+
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value.trim();
+
+    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!regexEmail.test(email)) {
+        mostraErrore("email", "Inserisci un'email valida.");
+        valido = false;
+    } else {
+        pulisciErrore("email");
+    }
+
+    if (password.length < 6) {
+        mostraErrore("password", "La password deve contenere almeno 6 caratteri.");
+        valido = false;
+    } else {
+        pulisciErrore("password");
+    }
+
+    return valido;
+}
