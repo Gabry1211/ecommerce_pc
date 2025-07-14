@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8">
     <title>TechZone</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
     <header class="navbar">
