@@ -48,21 +48,30 @@ public class ProdottoDAO {
 	        return prodotti;
 	    }
 		
-		public void doSave(Prodotto p) {
-		    try (Connection con = DBConnection.getConnection();
-		         PreparedStatement ps = con.prepareStatement(
-		             "INSERT INTO prodotto (descrizione, prezzo, tipo) VALUES (?, ?, ?)")) {
+		public void doSave(Prodotto prodotto) throws SQLException {
+		    Connection con = null;
+		    PreparedStatement ps = null;
 
-		        ps.setString(1, p.getDescrizione());
-		        ps.setDouble(2, p.getPrezzo());
-		        ps.setString(3, p.getTipo());
+		    String query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, ID_Venditore, Percorso_Immagine) " +
+		                   "VALUES (?, ?, ?, ?, ?)";
+
+		    try {
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(query);
+
+		        ps.setString(1, prodotto.getDescrizione());
+		        ps.setDouble(2, Double.valueOf(prodotto.getPrezzo()));
+		        ps.setString(3, prodotto.getTipo());
+		        ps.setInt(4, prodotto.getIdVenditore());
+		        ps.setString(5, prodotto.getImmagine());
 
 		        ps.executeUpdate();
-
-		    } catch (SQLException e) {
-		        e.printStackTrace();
+		    } finally {
+		        if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+		        if (con != null) try { con.close(); } catch (SQLException ignored) {}
 		    }
 		}
+
 		
 		public void doUpdate(Prodotto p) {
 		    try (Connection con = DBConnection.getConnection();

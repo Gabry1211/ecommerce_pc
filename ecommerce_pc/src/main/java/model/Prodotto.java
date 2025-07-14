@@ -25,6 +25,8 @@ public class Prodotto {
         this.dataAcquisto = new Date(System.currentTimeMillis());
         this.oraAcquisto = new Time(System.currentTimeMillis());
     }
+    
+    public Prodotto() {}
 
     // Getter
     public int getIdProdotto() {
@@ -87,6 +89,14 @@ public class Prodotto {
     
     public void setTipo(String tipo) {
     	this.tipo = tipo;
+    }
+    
+    public void setIdVenditore(int idVenditore) {
+    	this.idVenditore = idVenditore;
+    }
+    
+    public void setImmagine(String immagine) {
+    	this.immagine = immagine;
     }
 
 }

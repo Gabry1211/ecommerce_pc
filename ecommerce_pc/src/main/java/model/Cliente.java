@@ -15,6 +15,8 @@ public class Cliente {
         this.password = password;
     }
     
+    public Cliente() {}
+    
     public void set_codiceFiscale(String codiceFiscale) {
     	this.codiceFiscale = codiceFiscale;
     }
