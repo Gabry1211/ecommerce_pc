@@ -9,8 +9,6 @@
 </head>
 <body class="login-page">
 
-    <%@ include file="fragments/header.jsp" %>
-
     <div class="login-card">
         <h2 class="login-title">Registrazione Cliente</h2>
 
@@ -48,8 +46,6 @@
             Hai già un account? <a href="login.jsp">Effettua il login</a>
         </p>
     </div>
-
-    <%@ include file="fragments/footer.jsp" %>
 
 </body>
 </html>
