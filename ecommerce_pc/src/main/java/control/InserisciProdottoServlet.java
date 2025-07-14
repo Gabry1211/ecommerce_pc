@@ -48,6 +48,8 @@ public class InserisciProdottoServlet extends HttpServlet {
         if (!imagesDir.exists()) {
             imagesDir.mkdirs();
         }
+        
+        System.out.println("Percorso immagini: " + imagesPath);
 
         // Salva fisicamente il file
         File file = new File(imagesDir, fileName);
