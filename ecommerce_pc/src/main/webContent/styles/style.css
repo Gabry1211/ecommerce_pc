@@ -52,3 +52,31 @@
 .main-container {
     padding: 20px;
 }
+
+.site-footer {
+    background-color: #232f3e;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-family: Arial, sans-serif;
+    margin-top: 40px;
+}
+
+.footer-content p {
+    margin: 5px 0;
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #ddd;
+    margin: 0 10px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.footer-links a:hover {
+    text-decoration: underline;
+}
