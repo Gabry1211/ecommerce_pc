@@ -35,7 +35,7 @@ public class VenditoreDAO {
 	            venditore.setNome(rs.getString("Nome"));
 	            venditore.setPartitaIVA(partitaIVA);
 	            venditore.setCodiceFiscale(rs.getString("Codice_Fiscale"));
-	            venditore.setPassword(rs.getString("Password"));
+	            venditore.setPassword(password);
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
