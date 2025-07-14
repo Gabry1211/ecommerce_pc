@@ -17,19 +17,26 @@ public class ModificaProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
    
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int id = Integer.parseInt(request.getParameter("idProdotto"));
-        String nome = request.getParameter("nome");
-		String descrizione = request.getParameter("descrizione");
-        double prezzo = Double.parseDouble(request.getParameter("prezzo"));
-        String tipo = request.getParameter("tipo");
+		try {
+            int idProdotto = Integer.parseInt(request.getParameter("idProdotto"));
+            String descrizione = request.getParameter("descrizione");
+            double prezzo = Double.parseDouble(request.getParameter("prezzo"));
+            String tipo = request.getParameter("tipo");
 
-        Prodotto prodotto = new Prodotto(id, nome, descrizione, prezzo, tipo, "", "", 0);
-        
+            Prodotto prodotto = new Prodotto();
+            prodotto.setIdProdotto(idProdotto);
+            prodotto.setDescrizione(descrizione);
+            prodotto.setPrezzo(prezzo);
+            prodotto.setTipo(tipo);
 
-        ProdottoDAO dao = new ProdottoDAO();
-        dao.doUpdate(prodotto);
+            ProdottoDAO prodottoDAO = new ProdottoDAO();
+            prodottoDAO.doUpdate(prodotto);
 
-        response.sendRedirect("VisualizzaProdottiServlet");
+            response.sendRedirect("venditoreHome.jsp");
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("errore.jsp");
+        }
 	}
 
 }
