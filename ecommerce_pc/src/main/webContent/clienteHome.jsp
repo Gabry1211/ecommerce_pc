@@ -22,9 +22,6 @@
 %>
 <jsp:include page="fragments/header.jsp" />
 
-
-<jsp:include page="fragments/header.jsp" />
-
 <!-- 🔍 Barra di ricerca e carrello -->
 <div class="top-bar">
     <form action="CercaProdottiServlet" method="get" class="search-bar">
