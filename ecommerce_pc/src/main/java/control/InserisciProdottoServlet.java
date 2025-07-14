@@ -18,9 +18,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 @WebServlet("/InserisciProdottoServlet")
-@MultipartConfig(fileSizeThreshold = 1024 * 1024 * 2,  // 2MB
-					maxFileSize = 1024 * 1024 * 10,       // 10MB
-					maxRequestSize = 1024 * 1024 * 50)    // 50MB
+@MultipartConfig
 public class InserisciProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -40,18 +38,23 @@ public class InserisciProdottoServlet extends HttpServlet {
         model.Venditore venditore = (model.Venditore) session.getAttribute("venditore");
         int idVenditore = venditore.getIdVenditore();
 
-        // Gestione file immagine
-        Part filePart = request.getPart("immagine");
-        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString(); // es. "pc1.jpg"
-        String uploadPath = getServletContext().getRealPath("") + File.separator + "images";
+     // Prendi l'immagine
+        Part filePart = request.getPart("immagine"); // input name="immagine"
+        String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-        // Crea la cartella se non esiste
-        File uploadDir = new File(uploadPath);
-        if (!uploadDir.exists()) uploadDir.mkdir();
+        // Percorso assoluto alla cartella "images" (dentro WebContent/)
+        String imagesPath = getServletContext().getRealPath("/images");
+        File imagesDir = new File(imagesPath);
+        if (!imagesDir.exists()) {
+            imagesDir.mkdirs();
+        }
 
-        // Scrive il file nella cartella /images
-        filePart.write(uploadPath + File.separator + fileName);
-        String imagePath = "images/" + fileName;
+        // Salva fisicamente il file
+        File file = new File(imagesDir, fileName);
+        filePart.write(file.getAbsolutePath());
+
+        // Salva nel DB solo il nome del file o il relativo path
+        String percorsoImmagine = "images/" + fileName;
 
         // Crea il prodotto e salva nel DB
         Prodotto prodotto = new Prodotto();
@@ -59,7 +62,7 @@ public class InserisciProdottoServlet extends HttpServlet {
         prodotto.setTipo(tipo);
         prodotto.setPrezzo(prezzo);
         prodotto.setIdVenditore(idVenditore);
-        prodotto.setImmagine(imagePath); // nuovo campo
+        prodotto.setImmagine(percorsoImmagine); // nuovo campo
 
         try {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
