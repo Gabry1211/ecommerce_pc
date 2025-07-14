@@ -9,7 +9,7 @@
     Venditore venditore = (Venditore) session.getAttribute("venditore");
 
     if (venditore == null) {
-        response.sendRedirect("../login.jsp");
+        response.sendRedirect("login.jsp");
         return;
     }
 

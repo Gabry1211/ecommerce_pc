@@ -117,7 +117,7 @@ public class ProdottoDAO {
 		            p.setIdProdotto(rs.getInt("id_prodotto"));
 		            p.setDescrizione(rs.getString("descrizione"));
 		            p.setPrezzo(rs.getDouble("prezzo"));
-		            p.setTipo(rs.getString("quantita"));
+		            p.setTipo(rs.getString("Tipo"));
 		            prodotti.add(p);
 		        }
 		    } catch (SQLException e) {
