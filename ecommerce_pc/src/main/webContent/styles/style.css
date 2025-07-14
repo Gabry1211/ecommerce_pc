@@ -133,7 +133,7 @@
 }
 
 body.login-page {
-    background-color: #f7f7f7; /* grigio molto chiaro */
+    background-color: #f7f7f7;
     font-family: Arial, sans-serif;
     display: flex;
     justify-content: center;
@@ -166,9 +166,10 @@ body.login-page {
     color: #333;
 }
 
+.login-form input[type="text"]
 .login-form input[type="email"],
 .login-form input[type="password"],
-.login-form input[type="text"] {
+.login-form input[type="date"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
