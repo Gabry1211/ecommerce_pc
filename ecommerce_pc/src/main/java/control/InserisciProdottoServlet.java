@@ -64,7 +64,7 @@ public class InserisciProdottoServlet extends HttpServlet {
         try {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             prodottoDAO.doSave(prodotto);
-            response.sendRedirect("areaVenditore.jsp"); // o dove vuoi tu
+            response.sendRedirect("venditoreHome.jsp"); // o dove vuoi tu
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("errore.jsp");
