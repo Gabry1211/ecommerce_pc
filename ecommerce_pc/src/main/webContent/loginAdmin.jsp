@@ -9,8 +9,6 @@
 </head>
 <body class="login-page">
 
-    <%@ include file="fragments/header.jsp" %>
-
     <div class="login-card">
         <h2 class="login-title">Accesso Amministratore</h2>
 
@@ -31,8 +29,6 @@
             Sei un venditore? <a href="loginVenditore.jsp">Accedi come Venditore</a>
         </p>
     </div>
-
-    <%@ include file="fragments/footer.jsp" %>
 
 </body>
 </html>
