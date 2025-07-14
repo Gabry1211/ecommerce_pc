@@ -280,3 +280,45 @@ body.login-page {
     width: 100%;
     height: auto;
 }
+
+.dashboard {
+    padding: 20px;
+}
+
+.intestazione h2 {
+    margin-bottom: 10px;
+}
+
+.griglia-prodotti {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.card-prodotto {
+    width: 250px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card-prodotto img {
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+}
+
+.btn, .btn-modifica, .btn-elimina {
+    display: inline-block;
+    margin: 5px;
+    padding: 5px 10px;
+    border-radius: 4px;
+    text-decoration: none;
+    color: white;
+}
+
+.btn { background-color: #007bff; }
+.btn-modifica { background-color: #28a745; }
+.btn-elimina { background-color: #dc3545; }

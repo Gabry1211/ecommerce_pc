@@ -76,7 +76,7 @@ public class ProdottoDAO {
 		public void doUpdate(Prodotto p) {
 		    try (Connection con = DBConnection.getConnection();
 		         PreparedStatement ps = con.prepareStatement(
-		             "UPDATE prodotto SET descrizione = ?, prezzo = ?, tipo = ? WHERE id = ?")) {
+		             "UPDATE prodotto SET Descrizione = ?, Prezzo = ?, Tipo = ? WHERE ID_Prodotto = ?")) {
 
 		        ps.setString(1, p.getDescrizione());
 		        ps.setDouble(2, p.getPrezzo());

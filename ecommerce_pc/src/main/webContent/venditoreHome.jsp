@@ -1,28 +1,52 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ page import="jakarta.servlet.*" %>
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.util.*" %>
+<%@ page import="model.*" %>
 <%
-model.Venditore venditore = (model.Venditore) session.getAttribute("venditore");
-if (venditore == null) {
-    response.sendRedirect("login.jsp");
-    return;
-}
-int idVenditore = venditore.getIdVenditore();
+    Venditore venditore = (Venditore) session.getAttribute("venditore");
+    if (venditore == null) {
+        response.sendRedirect("login.jsp");
+        return;
+    }
+
+    int idVenditore = venditore.getIdVenditore();
+    ProdottoDAO prodottoDAO = new ProdottoDAO();
+    List<Prodotto> prodottiVenditore = prodottoDAO.doRetrieveByVenditore(idVenditore);
 %>
+<!DOCTYPE html>
 <html>
 <head>
-  <title>Homepage Venditore</title>
+    <meta charset="UTF-8">
+    <title>Homepage Venditore</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h2>Benvenuto Venditore (ID: <%= idVenditore %>)</h2>
+<jsp:include page="fragments/header.jsp" />
 
-  <ul>
-    <li><a href="inserisciProdotto.jsp">Inserisci nuovo prodotto</a></li>
-    <li><a href="modificaProdotto.jsp">Modifica un prodotto</a></li>
-    <li><a href="eliminaProdotto.jsp">Elimina un prodotto</a></li>
-    <li><a href="visualizzaProdottiVenditore.jsp">Visualizza i tuoi prodotti</a></li>
-    <li><a href="logout.jsp">Logout</a></li>
-  </ul>
+<div class="dashboard">
+    <div class="intestazione">
+        <h2>Benvenuto, <%= venditore.getNome() %>!</h2>
+        <a href="logout.jsp">Logout</a>
+    </div>
+
+    <div class="azioni">
+        <a href="inserisciProdotto.jsp" class="btn">➕ Inserisci nuovo prodotto</a>
+    </div>
+
+    <h3>I tuoi prodotti</h3>
+    <div class="griglia-prodotti">
+        <% for (Prodotto p : prodottiVenditore) { %>
+            <div class="card-prodotto">
+                <img src="<%= p.getImmagine() != null ? "images/" + p.getImmagine() : "images/default.jpg" %>" alt="Prodotto">
+                <h3><%= p.getDescrizione() %></h3>
+                <p>Prezzo: €<%= String.format("%.2f", p.getPrezzo()) %></p>
+                <p>Tipo: <%= p.getTipo() %></p>
+                <a href="modificaProdotto.jsp?id=<%= p.getIdProdotto() %>" class="btn-modifica">✏️ Modifica</a>
+                <a href="EliminaProdottoServlet?id=<%= p.getIdProdotto() %>" class="btn-elimina" onclick="return confirm('Sei sicuro di voler eliminare questo prodotto?');">🗑️ Elimina</a>
+            </div>
+        <% } %>
+    </div>
+</div>
+
+<jsp:include page="fragments/footer.jsp" />
 </body>
 </html>
