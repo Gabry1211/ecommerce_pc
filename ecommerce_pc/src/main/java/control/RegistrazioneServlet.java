@@ -24,7 +24,7 @@ public class RegistrazioneServlet extends HttpServlet {
             String indirizzo = request.getParameter("indirizzo");
             String password = request.getParameter("password");
 
-            Cliente c = new Cliente(cf, nome, data, email, indirizzo);
+            Cliente c = new Cliente(cf, nome, data, email, indirizzo, password);
             ClienteDao dao = new ClienteDao();
             dao.registraCliente(c, password);
 

@@ -3,15 +3,16 @@ package model;
 import java.sql.Date;
 
 public class Cliente {
-	private String codiceFiscale, nome, email, indirizzo;
+	private String codiceFiscale, nome, email, indirizzo, password;
     private Date dataDiNascita;
 
-    public Cliente(String codiceFiscale, String nome, Date dataDiNascita, String email, String indirizzo) {
+    public Cliente(String codiceFiscale, String nome, Date dataDiNascita, String email, String indirizzo, String password) {
         this.codiceFiscale = codiceFiscale;
         this.nome = nome;
         this.dataDiNascita = dataDiNascita;
         this.email = email;
         this.indirizzo = indirizzo;
+        this.password = password;
     }
     
     public void set_codiceFiscale(String codiceFiscale) {
@@ -52,6 +53,14 @@ public class Cliente {
     
     public String get_indirizzo() {
     	return indirizzo;
+    }
+    
+    public void set_password(String password) {
+    	this.password = password;
+    }
+    
+    public String get_password() {
+    	return password;
     }
 
 }
