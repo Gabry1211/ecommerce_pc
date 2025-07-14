@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class VenditoreDAO {
 	public void registraVenditore(Venditore v) throws SQLException {
-        String sql = "INSERT INTO Venditore (Nome, Partita_IVA, Codice_Fiscale, Password) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Venditore (Nome, Partita_IVA, Codice_Fiscale, Password) VALUES (?, ?, ?, ?)";
 
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql)) {
@@ -35,7 +35,7 @@ public class VenditoreDAO {
 	            venditore.setNome(rs.getString("Nome"));
 	            venditore.setPartitaIVA(partitaIVA);
 	            venditore.setCodiceFiscale(rs.getString("Codice_Fiscale"));
-	            venditore.setPassword(password);
+	            venditore.setPassword(rs.getString("Password"));
 	        }
 	    } catch (SQLException e) {
 	        e.printStackTrace();
