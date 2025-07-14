@@ -26,11 +26,13 @@ public class RegistrazioneVenditoreServlet extends HttpServlet {
 		  String nome = request.getParameter("nome");
 	        String partitaIVA = request.getParameter("partitaIva");
 	        String codiceFiscale = request.getParameter("codiceFiscale");
+	        String password = request.getParameter("password");
 
 	        Venditore v = new Venditore();
 	        v.setNome(nome);
 	        v.setPartitaIVA(partitaIVA);
 	        v.setCodiceFiscale(codiceFiscale);
+	        v.setPassword(password);
 
 	        VenditoreDAO dao = new VenditoreDAO();
 	        try {
