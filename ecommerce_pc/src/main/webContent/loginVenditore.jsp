@@ -3,27 +3,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Venditore</title>
+    <title>Login Venditore - TechZone</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="scripts/validate.js"></script>
 </head>
-<body>
-<%@ include file="fragments/header.jsp" %>
+<body class="login-page">
 
-<h2>Login Venditore</h2>
+    <%@ include file="fragments/header.jsp" %>
 
-<form action="LoginVenditoreServlet" method="post" onsubmit="return validaLoginVenditore()">
-    <label>Partita IVA:</label>
-    <input type="text" id="partitaIVA" name="partitaIVA" required>
-    <span id="partitaIVAErrore" class="errore"></span><br><br>
+    <div class="login-card">
+        <h2 class="login-title">Accesso Venditore</h2>
 
-    <label>Password:</label>
-    <input type="password" id="passwordVenditore" name="password" required>
-    <span id="passwordVenditoreErrore" class="errore"></span><br><br>
+        <form action="LoginVenditoreServlet" method="post" onsubmit="return validaLoginVenditore()" class="login-form">
+            <label for="partitaIVA">Partita IVA:</label>
+            <input type="text" id="partitaIVA" name="partitaIVA" required>
+            <span id="partitaIVAErrore" class="errore"></span>
 
-    <input type="submit" value="Login">
-</form>
+            <label for="passwordVenditore">Password:</label>
+            <input type="password" id="passwordVenditore" name="password" required>
+            <span id="passwordVenditoreErrore" class="errore"></span>
 
-<%@ include file="fragments/footer.jsp" %>
+            <input type="submit" value="Login" class="btn-login">
+        </form>
+
+        <p class="login-links">
+            Sei un cliente? <a href="login.jsp">Accedi come Cliente</a><br>
+            Sei un amministratore? <a href="loginAdmin.jsp">Accedi come Admin</a>
+        </p>
+    </div>
+
+    <%@ include file="fragments/footer.jsp" %>
+
 </body>
 </html>
