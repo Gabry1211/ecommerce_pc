@@ -91,15 +91,12 @@ public class ProdottoDAO {
 		}
 		
 		public void doDelete(int idProdotto) {
-		    try (Connection con = DBConnection.getConnection();
-		         PreparedStatement ps = con.prepareStatement(
-		             "DELETE FROM prodotto WHERE id = ?")) {
-
+			try (Connection con = DBConnection.getConnection()) {
+		        PreparedStatement ps = con.prepareStatement("DELETE FROM prodotto WHERE ID_Prodotto = ?");
 		        ps.setInt(1, idProdotto);
 		        ps.executeUpdate();
-
 		    } catch (SQLException e) {
-		        e.printStackTrace();
+		        throw new RuntimeException(e);
 		    }
 		}
 		
