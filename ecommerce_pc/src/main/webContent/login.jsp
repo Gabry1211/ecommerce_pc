@@ -3,25 +3,31 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Login Cliente</title>
+    <title>Login Cliente - TechZone</title>
     <link rel="stylesheet" href="styles/style.css">
     <script src="scripts/validate.js"></script>
 </head>
-<body>
-    <h2>Login</h2>
-    <form action="LoginServlet" method="post" onsubmit="return validaLoginCliente()">
-        <label>Email:</label>
-        <input type="email" name="email" id="email" required>
-        <span id="emailErrore" class="errore"></span><br>
+<body class="login-page">
 
-        <label>Password:</label>
-        <input type="password" name="password" id="password" required>
-        <span id="passwordErrore" class="errore"></span><br>
+    <div class="login-card">
+        <h2 class="login-title">Accedi al tuo account</h2>
+        <form action="LoginServlet" method="post" onsubmit="return validaLoginCliente()" class="login-form">
+            <label for="email">Email:</label>
+            <input type="email" name="email" id="email" required>
+            <span id="emailErrore" class="errore"></span>
 
-        <input type="submit" value="Login">
-    </form>
-    
-    <p>Sei un amministratore? <a href="loginAdmin.jsp">Accedi come Admin</a></p>
-    <p>Sei un venditore? <a href="loginVenditore.jsp">Accedi come Venditore</a></p>
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+            <span id="passwordErrore" class="errore"></span>
+
+            <input type="submit" value="Login" class="btn-login">
+        </form>
+
+        <p class="login-links">
+            Sei un amministratore? <a href="loginAdmin.jsp">Accedi come Admin</a><br>
+            Sei un venditore? <a href="loginVenditore.jsp">Accedi come Venditore</a>
+        </p>
+    </div>
+
 </body>
 </html>
