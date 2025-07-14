@@ -13,13 +13,22 @@
             <a href="index.jsp">TechZone</a>
         </div>
         
+        <%
+    		Boolean nascondi = (Boolean) request.getAttribute("nascondiBarraRicerca");
+    		if (nascondi == null || !nascondi) {
+		%>
+        
         <div class="search-bar">
             <form action="RicercaProdottiServlet" method="get">
                 <input type="text" name="query" placeholder="Cerca prodotti..." />
                 <button type="submit">Cerca</button>
             </form>
         </div>
-
+		
+		<%
+    		}
+		%>
+		
         <nav class="nav-links">
             <a href="index.jsp">Home</a>
             <a href="VisualizzaProdottiServlet">Prodotti</a>

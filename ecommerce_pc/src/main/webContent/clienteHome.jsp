@@ -17,6 +17,12 @@
 </head>
 <body class="home-page">
 
+<%
+    request.setAttribute("nascondiBarraRicerca", true);
+%>
+<jsp:include page="fragments/header.jsp" />
+
+
 <jsp:include page="fragments/header.jsp" />
 
 <!-- 🔍 Barra di ricerca e carrello -->
