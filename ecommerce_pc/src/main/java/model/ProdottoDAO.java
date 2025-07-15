@@ -25,28 +25,32 @@ public class ProdottoDAO {
 	    }
 		
 		public List<Prodotto> doRetrieveAll() {
-	        List<Prodotto> prodotti = new ArrayList<>();
+		    List<Prodotto> prodotti = new ArrayList<>();
 
-	        try (Connection con = DBConnection.getConnection();
-	             PreparedStatement ps = con.prepareStatement("SELECT * FROM prodotto")) {
+		    String sql = "SELECT * FROM prodotto";
 
-	            ResultSet rs = ps.executeQuery();
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql);
+		         ResultSet rs = ps.executeQuery()) {
 
-	            while (rs.next()) {
-	                Prodotto p = new Prodotto(0, null, 0, null, null, null, 0, 0);
-	                p.setIdProdotto(rs.getInt("id"));
-	                p.setDescrizione(rs.getString("descrizione"));
-	                p.setPrezzo(rs.getDouble("prezzo"));
-	                p.setTipo(rs.getString("tipo"));
-	                prodotti.add(p);
-	            }
+		        while (rs.next()) {
+		            Prodotto p = new Prodotto();
+		            p.setIdProdotto(rs.getInt("id"));
+		            p.setDescrizione(rs.getString("descrizione"));
+		            p.setPrezzo(rs.getDouble("prezzo"));
+		            p.setTipo(rs.getString("tipo"));
+		            p.setImmagine(rs.getString("immagine")); // importante per mostrare l'immagine
 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
+		            prodotti.add(p);
+		        }
 
-	        return prodotti;
-	    }
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return prodotti;
+		}
+
 		
 		public void doSave(Prodotto prodotto) throws SQLException {
 		    Connection con = null;
@@ -173,6 +177,35 @@ public class ProdottoDAO {
 
 		    return prodotti;
 		}
+		
+		public Prodotto doRetrieveById(int id) {
+		    Prodotto prodotto = null;
+		    String query = "SELECT * FROM prodotto WHERE ID_Prodotto = ?";
+		    
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(query)) {
+		        
+		        ps.setInt(1, id);
+		        ResultSet rs = ps.executeQuery();
+		        
+		        if (rs.next()) {
+		            prodotto = new Prodotto();
+		            prodotto.setIdProdotto(rs.getInt("id"));
+		            prodotto.setDescrizione(rs.getString("descrizione"));
+		            prodotto.setPrezzo(rs.getDouble("prezzo"));
+		            prodotto.setTipo(rs.getString("tipo"));
+		            prodotto.setImmagine(rs.getString("immagine")); // se c'è questo campo
+		            prodotto.setIdVenditore(rs.getInt("id_venditore")); // se ti serve
+		            // aggiungi altri campi se ce ne sono
+		        }
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+		    
+		    return prodotto;
+		}
+
 
 
 	}
