@@ -190,12 +190,12 @@ public class ProdottoDAO {
 		        
 		        if (rs.next()) {
 		            prodotto = new Prodotto();
-		            prodotto.setIdProdotto(rs.getInt("id"));
-		            prodotto.setDescrizione(rs.getString("descrizione"));
-		            prodotto.setPrezzo(rs.getDouble("prezzo"));
-		            prodotto.setTipo(rs.getString("tipo"));
-		            prodotto.setImmagine(rs.getString("immagine")); // se c'è questo campo
-		            prodotto.setIdVenditore(rs.getInt("id_venditore")); // se ti serve
+		            prodotto.setIdProdotto(rs.getInt("ID_Prodotto"));
+		            prodotto.setDescrizione(rs.getString("Descrizione"));
+		            prodotto.setPrezzo(rs.getDouble("Prezzo"));
+		            prodotto.setTipo(rs.getString("Tipo"));
+		            prodotto.setImmagine(rs.getString("Percorso_Immagine")); // se c'è questo campo
+		            prodotto.setIdVenditore(rs.getInt("ID_Venditore")); // se ti serve
 		            // aggiungi altri campi se ce ne sono
 		        }
 		        
