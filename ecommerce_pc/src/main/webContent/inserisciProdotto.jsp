@@ -21,6 +21,9 @@
     <label>Tipo:</label><br>
     <input type="text" name="tipo" required><br><br>
 
+    <label>Quantità:</label><br>
+    <input type="number" name="quantita" min="1" required><br><br>
+
     <label>Immagine del prodotto:</label><br>
     <input type="file" name="immagine" accept="image/*" required><br><br>
 
