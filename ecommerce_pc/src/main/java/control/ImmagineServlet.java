@@ -1,6 +1,7 @@
 package control;
 
 import jakarta.servlet.ServletException;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -11,6 +12,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 @WebServlet("/ImmagineServlet")
 public class ImmagineServlet extends HttpServlet {
@@ -21,32 +23,37 @@ public class ImmagineServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String fileName = request.getParameter("file");
         if (fileName == null || fileName.isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Parametro file mancante");
+            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "File non specificato.");
             return;
         }
 
-        File imageFile = new File(IMAGE_DIR, fileName);
-
-        if (!imageFile.exists() || imageFile.isDirectory()) {
-            response.sendError(HttpServletResponse.SC_NOT_FOUND); // 404
+        File file = new File("C:/upload_ecommerce/", fileName);
+        if (!file.exists()) {
+            response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
 
-        // Imposta il tipo MIME in base all’estensione del file
-        String mimeType = getServletContext().getMimeType(imageFile.getName());
-        if (mimeType == null) {
-            mimeType = "application/octet-stream";
+        String contentType = getServletContext().getMimeType(file.getName());
+        if (contentType == null) {
+            if (fileName.endsWith(".png")) {
+                contentType = "image/png";
+            } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                contentType = "image/jpeg";
+            } else if (fileName.endsWith(".gif")) {
+                contentType = "image/gif";
+            } else if (fileName.endsWith(".avif")) {
+                contentType = "image/avif";
+            } else {
+                contentType = "application/octet-stream"; // fallback
+            }
         }
-        response.setContentType(mimeType);
-        response.setContentLengthLong(imageFile.length());
+        response.setContentType(contentType);
 
-        try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(imageFile));
-             BufferedOutputStream out = new BufferedOutputStream(response.getOutputStream())) {
-            byte[] buffer = new byte[8192];
-            int bytesRead;
-
-            while ((bytesRead = in.read(buffer)) != -1) {
-                out.write(buffer, 0, bytesRead);
+        try (FileInputStream in = new FileInputStream(file); OutputStream out = response.getOutputStream()) {
+            byte[] buffer = new byte[4096];
+            int length;
+            while ((length = in.read(buffer)) > 0) {
+                out.write(buffer, 0, length);
             }
         }
 	}
