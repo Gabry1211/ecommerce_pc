@@ -3,7 +3,6 @@
 <%@ page import="model.*, java.util.*" %>
 <%@ page session="true" %>
 
-
 <%
     // Controllo login cliente
     session = request.getSession(false);
@@ -53,8 +52,16 @@
 
     <form action="AggiungiAlCarrelloServlet" method="post">
         <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
+        <input type="hidden" name="descrizione" value="<%= prodotto.getDescrizione() %>">
+        <input type="hidden" name="prezzo" value="<%= prodotto.getPrezzo() %>">
+        <input type="hidden" name="tipo" value="<%= prodotto.getTipo() %>">
+        <input type="hidden" name="immagine" value="<%= prodotto.getImmagine() %>">
+        <input type="hidden" name="cfAdmin" value="<%= prodotto.getCfAdmin() %>">
+        <input type="hidden" name="idVenditore" value="<%= prodotto.getIdVenditore() %>">
+
         <label for="quantita">Quantità:</label>
         <input type="number" name="quantita" id="quantita" value="1" min="1" required>
+
         <button type="submit">Aggiungi al carrello</button>
     </form>
 </div>
