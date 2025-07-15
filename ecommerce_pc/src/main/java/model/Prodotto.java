@@ -11,9 +11,10 @@ public class Prodotto {
     private int idVenditore;
     private Date dataAcquisto, dataConsegna;
     private Time oraAcquisto, oraConsegna;
+    private int quantita;
 
     // Costruttori diversi per admin e venditore
-    public Prodotto(int idProdotto, String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore) {
+    public Prodotto(int idProdotto, String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore, int quantita) {
         this.idProdotto = idProdotto;
     	this.descrizione = descrizione;
         this.prezzo = prezzo;
@@ -23,6 +24,7 @@ public class Prodotto {
         this.idVenditore = idVenditore;
         this.dataAcquisto = new Date(System.currentTimeMillis());
         this.oraAcquisto = new Time(System.currentTimeMillis());
+        this.quantita = quantita;
     }
     
     public Prodotto() {}
@@ -68,6 +70,10 @@ public class Prodotto {
     	return oraAcquisto;
     }
     
+    public int getQuantita() {
+    	return quantita;
+    }
+    
 //    Setter
     
     public void setIdProdotto(int idProdotto) {
@@ -96,6 +102,10 @@ public class Prodotto {
     
     public void setImmagine(String immagine) {
     	this.immagine = immagine;
+    }
+    
+    public void setQuantita(int quantita) {
+    	this.quantita = quantita;
     }
 
 }
