@@ -104,27 +104,41 @@ public class ProdottoDAO {
 		
 		public List<Prodotto> doRetrieveByVenditore(int idVenditore) {
 		    List<Prodotto> prodotti = new ArrayList<>();
+		    Connection con = null;
+		    PreparedStatement ps = null;
+		    ResultSet rs = null;
 
-		    try (Connection con = DBConnection.getConnection()) {
-		        PreparedStatement ps = con.prepareStatement(
-		            "SELECT * FROM prodotto WHERE id_venditore = ?");
+		    String query = "SELECT * FROM Prodotto WHERE ID_Venditore = ?";
+
+		    try {
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(query);
 		        ps.setInt(1, idVenditore);
+		        rs = ps.executeQuery();
 
-		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
-		            Prodotto p = new Prodotto(idVenditore, null, idVenditore, null, null, null, idVenditore, 0);
-		            p.setIdProdotto(rs.getInt("id_prodotto"));
-		            p.setDescrizione(rs.getString("descrizione"));
-		            p.setPrezzo(rs.getDouble("prezzo"));
+		            Prodotto p = new Prodotto();
+		            p.setIdProdotto(rs.getInt("ID_Prodotto"));
+		            p.setDescrizione(rs.getString("Descrizione"));
+		            p.setPrezzo(rs.getDouble("Prezzo"));
 		            p.setTipo(rs.getString("Tipo"));
+		            p.setIdVenditore(rs.getInt("ID_Venditore"));
+		            p.setImmagine(rs.getString("Percorso_Immagine")); // ✅ IMPORTANTE
+		            p.setQuantita(rs.getInt("Quantita")); // se usi anche la quantità
 		            prodotti.add(p);
 		        }
+
 		    } catch (SQLException e) {
 		        e.printStackTrace();
+		    } finally {
+		        try { if (rs != null) rs.close(); } catch (SQLException e) {}
+		        try { if (ps != null) ps.close(); } catch (SQLException e) {}
+		        try { if (con != null) con.close(); } catch (SQLException e) {}
 		    }
 
 		    return prodotti;
 		}
+
 		
 		public List<Prodotto> cercaProdotti(String keyword, String categoria, double minPrezzo, double maxPrezzo) {
 		    List<Prodotto> prodotti = new ArrayList<>();
