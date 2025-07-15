@@ -35,11 +35,11 @@ public class ProdottoDAO {
 
 		        while (rs.next()) {
 		            Prodotto p = new Prodotto();
-		            p.setIdProdotto(rs.getInt("id"));
-		            p.setDescrizione(rs.getString("descrizione"));
-		            p.setPrezzo(rs.getDouble("prezzo"));
-		            p.setTipo(rs.getString("tipo"));
-		            p.setImmagine(rs.getString("immagine")); // importante per mostrare l'immagine
+		            p.setIdProdotto(rs.getInt("ID_Prodotto"));
+		            p.setDescrizione(rs.getString("Descrizione"));
+		            p.setPrezzo(rs.getDouble("Prezzo"));
+		            p.setTipo(rs.getString("Tipo"));
+		            p.setImmagine(rs.getString("Percorso_Immagine")); // importante per mostrare l'immagine
 
 		            prodotti.add(p);
 		        }
