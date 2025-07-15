@@ -64,7 +64,7 @@ public class InserisciProdottoServlet extends HttpServlet {
         prodotto.setPrezzo(prezzo);
         prodotto.setQuantita(quantita); // 🆕 nuova quantità
         prodotto.setIdVenditore(idVenditore);
-        prodotto.setImmagine("images/" + fileName); // percorso relativo
+        prodotto.setImmagine(percorsoImmagine); // percorso relativo
 
         try {
             ProdottoDAO prodottoDAO = new ProdottoDAO();

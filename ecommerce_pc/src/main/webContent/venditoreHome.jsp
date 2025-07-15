@@ -37,7 +37,7 @@
     <div class="griglia-prodotti">
         <% for (Prodotto p : prodottiVenditore) { %>
             <div class="card-prodotto">
-                <img src="<%= p.getImmagine() != null && !p.getImmagine().isEmpty() ? p.getImmagine() : "images/default.jpg" %>" alt="Prodotto" style="max-width: 200px; max-height: 200px;">
+                <img src="ImmagineServlet?file=<%= p.getImmagine() %>" alt="Prodotto" style="max-width: 200px; max-height: 200px;">
                 <h3><%= p.getDescrizione() %></h3>
                 <p>Prezzo: €<%= String.format("%.2f", p.getPrezzo()) %></p>
                 <p>Tipo: <%= p.getTipo() %></p>
