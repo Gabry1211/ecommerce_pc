@@ -37,10 +37,11 @@
     <div class="griglia-prodotti">
         <% for (Prodotto p : prodottiVenditore) { %>
             <div class="card-prodotto">
-                <img src="<%= p.getImmagine() != null ? "images/" + p.getImmagine() : "images/default.jpg" %>" alt="Prodotto">
+                <img src="<%= p.getImmagine() != null && !p.getImmagine().isEmpty() ? p.getImmagine() : "images/default.jpg" %>" alt="Prodotto" style="max-width: 200px; max-height: 200px;">
                 <h3><%= p.getDescrizione() %></h3>
                 <p>Prezzo: €<%= String.format("%.2f", p.getPrezzo()) %></p>
                 <p>Tipo: <%= p.getTipo() %></p>
+                <p>Quantità: <%= p.getQuantita() %></p>
                 <a href="modificaProdotto.jsp?id=<%= p.getIdProdotto() %>" class="btn-modifica">✏️ Modifica</a>
                 <a href="EliminaProdottoServlet?id=<%= p.getIdProdotto() %>" class="btn-elimina" onclick="return confirm('Sei sicuro di voler eliminare questo prodotto?');">🗑️ Elimina</a>
             </div>
