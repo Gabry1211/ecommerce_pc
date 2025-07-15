@@ -13,9 +13,8 @@ public class Prodotto {
     private Time oraAcquisto, oraConsegna;
 
     // Costruttori diversi per admin e venditore
-    public Prodotto(int idProdotto,String nome, String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore) {
+    public Prodotto(int idProdotto, String descrizione, double prezzo, String tipo, String immagine, String cfAdmin, int idVenditore) {
         this.idProdotto = idProdotto;
-        this.nome = nome;
     	this.descrizione = descrizione;
         this.prezzo = prezzo;
         this.tipo = tipo;

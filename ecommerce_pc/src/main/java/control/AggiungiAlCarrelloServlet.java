@@ -31,7 +31,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
         }
 
         try {
-            Prodotto p = new Prodotto(idProdotto, nome, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore);
+            Prodotto p = new Prodotto(idProdotto, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore);
             carrello.aggiungiProdotto(p);
             response.sendRedirect("carrello.jsp");
         } catch (Exception e) {

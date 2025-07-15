@@ -33,7 +33,7 @@ public class ProdottoDAO {
 	            ResultSet rs = ps.executeQuery();
 
 	            while (rs.next()) {
-	                Prodotto p = new Prodotto(0, null, null, 0, null, null, null, 0);
+	                Prodotto p = new Prodotto(0, null, 0, null, null, null, 0);
 	                p.setIdProdotto(rs.getInt("id"));
 	                p.setDescrizione(rs.getString("descrizione"));
 	                p.setPrezzo(rs.getDouble("prezzo"));
@@ -110,7 +110,7 @@ public class ProdottoDAO {
 
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
-		            Prodotto p = new Prodotto(idVenditore, null, null, idVenditore, null, null, null, idVenditore);
+		            Prodotto p = new Prodotto(idVenditore, null, idVenditore, null, null, null, idVenditore);
 		            p.setIdProdotto(rs.getInt("id_prodotto"));
 		            p.setDescrizione(rs.getString("descrizione"));
 		            p.setPrezzo(rs.getDouble("prezzo"));
@@ -142,7 +142,7 @@ public class ProdottoDAO {
 
 		        ResultSet rs = ps.executeQuery();
 		        while (rs.next()) {
-		            Prodotto p = new Prodotto(0, query, query, maxPrezzo, query, query, query, 0);
+		            Prodotto p = new Prodotto();
 		            p.setIdProdotto(rs.getInt("id"));
 		            p.setNome(rs.getString("nome"));
 		            p.setPrezzo(rs.getDouble("prezzo"));
