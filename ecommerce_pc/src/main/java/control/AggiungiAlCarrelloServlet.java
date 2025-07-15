@@ -21,6 +21,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 		String immagine = request.getParameter("immagine");
 		String cfAdmin = request.getParameter("cfAdmin");
 		int idVenditore = Integer.parseInt("idVenditore");
+		int quantita = Integer.parseInt("quantita");
 
         HttpSession session = request.getSession();
         Carrello carrello = (Carrello) session.getAttribute("carrello");
@@ -31,7 +32,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
         }
 
         try {
-            Prodotto p = new Prodotto(idProdotto, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore);
+            Prodotto p = new Prodotto(idProdotto, descrizione, prezzo, tipo, immagine, cfAdmin, idVenditore, quantita);
             carrello.aggiungiProdotto(p);
             response.sendRedirect("carrello.jsp");
         } catch (Exception e) {
