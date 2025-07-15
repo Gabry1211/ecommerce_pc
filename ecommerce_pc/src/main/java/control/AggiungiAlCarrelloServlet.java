@@ -23,6 +23,7 @@ public class AggiungiAlCarrelloServlet extends HttpServlet {
 			int idVenditore = Integer.parseInt(request.getParameter("idVenditore"));
 			int quantita = Integer.parseInt(request.getParameter("quantita"));
 
+
 			HttpSession session = request.getSession();
 			Carrello carrello = (Carrello) session.getAttribute("carrello");
 

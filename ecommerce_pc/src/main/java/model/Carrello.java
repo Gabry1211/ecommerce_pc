@@ -5,15 +5,18 @@ import java.util.*;
 public class Carrello {
 	private Map<Integer, ElementoCarrello> elementi = new HashMap<>();
 
-    public void aggiungiProdotto(Prodotto p) {
-        int id = p.getIdProdotto();
-        if (elementi.containsKey(id)) {
-            ElementoCarrello elem = elementi.get(id);
-            elem.setQuantita(elem.getQuantita() + 1);
-        } else {
-            elementi.put(id, new ElementoCarrello(p, 1));
-        }
-    }
+	public void aggiungiProdotto(Prodotto p) {
+	    int id = p.getIdProdotto();
+	    int quantitaDaAggiungere = p.getQuantita(); // prendi la quantità dal prodotto passato
+	    
+	    if (elementi.containsKey(id)) {
+	        ElementoCarrello elem = elementi.get(id);
+	        elem.setQuantita(elem.getQuantita() + quantitaDaAggiungere);
+	    } else {
+	        elementi.put(id, new ElementoCarrello(p, quantitaDaAggiungere));
+	    }
+	}
+
 
     public void rimuoviProdotto(int idProdotto) {
         elementi.remove(idProdotto);
