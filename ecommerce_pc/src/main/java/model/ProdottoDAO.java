@@ -52,18 +52,19 @@ public class ProdottoDAO {
 		    Connection con = null;
 		    PreparedStatement ps = null;
 
-		    String query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, ID_Venditore, Percorso_Immagine) " +
-		                   "VALUES (?, ?, ?, ?, ?)";
+		    String query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, ID_Venditore, Percorso_Immagine, Quantita) " +
+		                   "VALUES (?, ?, ?, ?, ?, ?)";
 
 		    try {
 		        con = DBConnection.getConnection();
 		        ps = con.prepareStatement(query);
 
 		        ps.setString(1, prodotto.getDescrizione());
-		        ps.setDouble(2, Double.valueOf(prodotto.getPrezzo()));
+		        ps.setDouble(2, prodotto.getPrezzo());
 		        ps.setString(3, prodotto.getTipo());
 		        ps.setInt(4, prodotto.getIdVenditore());
 		        ps.setString(5, prodotto.getImmagine());
+		        ps.setInt(6, prodotto.getQuantita());
 
 		        ps.executeUpdate();
 		    } finally {
@@ -71,6 +72,7 @@ public class ProdottoDAO {
 		        if (con != null) try { con.close(); } catch (SQLException ignored) {}
 		    }
 		}
+
 
 		
 		public void doUpdate(Prodotto p) {

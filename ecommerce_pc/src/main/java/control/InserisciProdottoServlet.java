@@ -23,10 +23,11 @@ public class InserisciProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// Recupera i dati del form
+		// Recupera i dati dal form
         String descrizione = request.getParameter("descrizione");
         String tipo = request.getParameter("tipo");
         double prezzo = Double.parseDouble(request.getParameter("prezzo"));
+        int quantita = Integer.parseInt(request.getParameter("quantita")); // 🆕 aggiunta quantità
 
         // Recupera il venditore dalla sessione
         HttpSession session = request.getSession(false);
@@ -38,38 +39,37 @@ public class InserisciProdottoServlet extends HttpServlet {
         model.Venditore venditore = (model.Venditore) session.getAttribute("venditore");
         int idVenditore = venditore.getIdVenditore();
 
-     // Prendi l'immagine
-        Part filePart = request.getPart("immagine"); // input name="immagine"
+        // Upload immagine
+        Part filePart = request.getPart("immagine");
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
-        // Percorso assoluto alla cartella "images" (dentro WebContent/)
-        String imagesPath = getServletContext().getRealPath("/images");
-        File imagesDir = new File(imagesPath);
-        if (!imagesDir.exists()) {
-            imagesDir.mkdirs();
-        }
-        
-        System.out.println("Percorso immagini: " + imagesPath);
+     // Percorso assoluto della cartella persistente (fuori da WebContent)
+        String uploadPath = "C:/upload_ecommerce/"; // <-- Cambia questo percorso se sei su Linux o altro
 
-        // Salva fisicamente il file
-        File file = new File(imagesDir, fileName);
+        File uploadDir = new File(uploadPath);
+        if (!uploadDir.exists()) {
+            uploadDir.mkdirs();
+        }
+
+        File file = new File(uploadDir, fileName);
         filePart.write(file.getAbsolutePath());
 
-        // Salva nel DB solo il nome del file o il relativo path
-        String percorsoImmagine = "images/" + fileName;
+        // Salva nel DB solo il nome del file
+        String percorsoImmagine = fileName;
 
-        // Crea il prodotto e salva nel DB
+        // Costruisci il Prodotto
         Prodotto prodotto = new Prodotto();
         prodotto.setDescrizione(descrizione);
         prodotto.setTipo(tipo);
         prodotto.setPrezzo(prezzo);
+        prodotto.setQuantita(quantita); // 🆕 nuova quantità
         prodotto.setIdVenditore(idVenditore);
-        prodotto.setImmagine(percorsoImmagine); // nuovo campo
+        prodotto.setImmagine("images/" + fileName); // percorso relativo
 
         try {
             ProdottoDAO prodottoDAO = new ProdottoDAO();
             prodottoDAO.doSave(prodotto);
-            response.sendRedirect("venditoreHome.jsp"); // o dove vuoi tu
+            response.sendRedirect("venditoreHome.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
             response.sendRedirect("errore.jsp");
