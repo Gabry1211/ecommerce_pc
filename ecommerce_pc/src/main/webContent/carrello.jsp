@@ -61,7 +61,7 @@
             <button type="submit" class="btn danger">Svuota Carrello</button>
         </form>
 
-        <form action="confermaOrdine" method="post" class="inline-form">
+        <form action="ConfermaOrdineServlet" method="post" class="inline-form">
             <button type="submit" class="btn conferma">Conferma Ordine</button>
         </form>
     </div>
