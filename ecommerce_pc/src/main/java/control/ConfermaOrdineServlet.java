@@ -51,7 +51,16 @@ public class ConfermaOrdineServlet extends HttpServlet {
             // Aggiorna quantità disponibili in magazzino
             for (ElementoCarrello elem : carrello.getElementi()) {
                 Prodotto prodotto = elem.getProdotto();
-                int nuovaQuantita = prodotto.getQuantita() - elem.getQuantita();
+
+                // Leggi quantità aggiornata dal DB
+                int quantitaAttuale = prodottoDAO.getQuantitaById(prodotto.getIdProdotto());
+
+                int nuovaQuantita = quantitaAttuale - elem.getQuantita();
+
+                if(nuovaQuantita < 0) {
+                    nuovaQuantita = 0; // o gestisci errore
+                }
+
                 prodottoDAO.aggiornaQuantita(prodotto.getIdProdotto(), nuovaQuantita);
             }
 

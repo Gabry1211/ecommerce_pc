@@ -216,6 +216,20 @@ public class ProdottoDAO {
 		        ps.executeUpdate();
 		    }
 		}
+		
+		public int getQuantitaById(int idProdotto) throws SQLException {
+		    String sql = "SELECT Quantita FROM Prodotto WHERE ID_Prodotto = ?";
+		    try (Connection conn = DBConnection.getConnection();
+		         PreparedStatement ps = conn.prepareStatement(sql)) {
+		        ps.setInt(1, idProdotto);
+		        ResultSet rs = ps.executeQuery();
+		        if (rs.next()) {
+		            return rs.getInt("Quantita");
+		        }
+		    }
+		    return 0; // o eccezione se preferisci
+		}
+
 
 
 	}
