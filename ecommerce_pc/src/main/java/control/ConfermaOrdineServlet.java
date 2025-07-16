@@ -30,7 +30,7 @@ public class ConfermaOrdineServlet extends HttpServlet {
 		Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
         Cliente cliente = (Cliente) request.getSession().getAttribute("utente");
 
-        if (carrello == null || cliente == null || carrello.isEmpty()) {
+        if (carrello == null || cliente == null) {
             response.sendRedirect("carrello.jsp");
             return;
         }
