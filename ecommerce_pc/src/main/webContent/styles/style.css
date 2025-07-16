@@ -16,42 +16,6 @@
     font-family: Arial, sans-serif;
 }
 
-/* 1) Menu con categorie con sfondo uguale all'header */
-.categorie-container {
-    background-color: #232f3e; /* stesso colore header */
-    padding: 15px;
-    border-radius: 6px;
-}
-
-/* Cambiamo colore testo categorie per leggibilità */
-.categoria-card {
-    color: white; /* testo bianco */
-    background-color: transparent; /* rimuoviamo sfondo grigio */
-    border: none; /* rimuoviamo bordo */
-    transition: background 0.2s;
-}
-
-.categoria-card:hover {
-    background-color: #3a4a63; /* leggero hover più chiaro */
-}
-
-/* 2) Pulsanti in alto a sinistra header con sfondo arancione */
-.top-bar button,
-.navbar button {
-    background-color: #FF9900;
-    color: white;
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-weight: bold;
-}
-
-.top-bar button:hover,
-.navbar button:hover {
-    background-color: #e68a00; /* arancione scuro hover */
-}
-
 .logo a {
     color: white;
     font-size: 24px;
