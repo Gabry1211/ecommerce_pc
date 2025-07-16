@@ -194,6 +194,7 @@ public class ProdottoDAO {
 		            prodotto.setDescrizione(rs.getString("Descrizione"));
 		            prodotto.setPrezzo(rs.getDouble("Prezzo"));
 		            prodotto.setTipo(rs.getString("Tipo"));
+		            prodotto.setQuantita(rs.getInt("Quantita"));
 		            prodotto.setImmagine(rs.getString("Percorso_Immagine")); // se c'è questo campo
 		            prodotto.setIdVenditore(rs.getInt("ID_Venditore")); // se ti serve
 		            // aggiungi altri campi se ce ne sono
