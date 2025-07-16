@@ -5,7 +5,7 @@
 <head>
     <meta charset="UTF-8" />
     <title>TechZone - Header</title>
-    <link rel="stylesheet" href="css/header.css" />
+    <link rel="stylesheet" href="styles/style.css" />
     <!-- Puoi aggiungere altri link CSS o script qui -->
 </head>
 <body>
