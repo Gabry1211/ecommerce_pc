@@ -61,7 +61,7 @@
 %>
     </table>
     <p><strong>Totale: €<%= String.format("%.2f", carrello.getTotale()) %></strong></p>
-    <form action="svuotaCarrello" method="post"><input type="submit" value="Svuota Carrello"></form>
+    <form action="SvuotaCarrelloServlet" method="post"><input type="submit" value="Svuota Carrello"></form>
     <form action="confermaOrdine" method="post"><input type="submit" value="Conferma Ordine"></form>
 <%
     }
