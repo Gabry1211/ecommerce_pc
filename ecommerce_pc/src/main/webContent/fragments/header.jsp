@@ -1,53 +1,55 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <title>TechZone</title>
-    <link rel="stylesheet" href="styles/style.css">
+    <meta charset="UTF-8" />
+    <title>TechZone - Header</title>
+    <link rel="stylesheet" href="css/header.css" />
+    <!-- Puoi aggiungere altri link CSS o script qui -->
 </head>
 <body>
-<header class="navbar">
-    <div class="navbar-left">
-        <div class="logo">
-            <a href="index.jsp">TechZone</a>
-        </div>
-        <div class="register-link">
-            <a href="registrazione.jsp">Registrati</a>
-        </div>
+
+<header>
+  <nav class="navbar">
+    <div class="logo">
+      <a href="home.jsp">TechZone</a>
     </div>
 
-    <%
-        Boolean nascondi = (Boolean) request.getAttribute("nascondiBarraRicerca");
-        if (nascondi == null || !nascondi) {
-    %>
     <div class="search-bar">
-        <form action="RicercaProdottiServlet" method="get">
-            <input type="text" name="query" placeholder="Cerca prodotti..." />
-            <button type="submit">Cerca</button>
-        </form>
+      <form action="RicercaProdottiServlet" method="get">
+        <input type="text" name="query" placeholder="Cerca prodotti..." required />
+        <button type="submit">Cerca</button>
+      </form>
     </div>
-    <% } %>
 
-    <nav class="nav-links">
-        <a href="index.jsp">Home</a>
-        
-        <div class="dropdown">
-            <a href="#">Categorie ▼</a>
-            <div class="dropdown-content">
-                <a href="VisualizzaCategoriaServlet?tipo=PC">PC Assemblati</a>
-                <a href="VisualizzaCategoriaServlet?tipo=SSD">SSD</a>
-                <a href="VisualizzaCategoriaServlet?tipo=GPU">Schede Video</a>
-                <a href="VisualizzaCategoriaServlet?tipo=RAM">RAM</a>
-                <a href="VisualizzaCategoriaServlet?tipo=Alimentatore">Alimentatori</a>
-            </div>
-        </div>
+    <div class="nav-buttons">
+      <a href="home.jsp">Home</a>
+      
+      <c:choose>
+        <c:when test="${not empty sessionScope.utente}">
+          <a href="profilo.jsp">Profilo</a>
+          <a href="LogoutServlet">Esci</a>
+        </c:when>
+        <c:otherwise>
+          <a href="login.jsp">Accedi</a>
+          <a href="registrazione.jsp">Registrati</a>
+        </c:otherwise>
+      </c:choose>
 
-        <a href="VisualizzaUltimiServlet">Novità</a>
-        <a href="carrello.jsp">Carrello</a>
-        <a href="login.jsp">Accedi</a>
-    </nav>
+      <a href="carrello.jsp">Carrello</a>
+    </div>
+  </nav>
+
+  <div class="categories-menu">
+    <a href="categoria.jsp?cat=componenti">Componenti</a>
+    <a href="categoria.jsp?cat=pc_fissi">PC Fissi</a>
+    <a href="categoria.jsp?cat=accessori">Accessori</a>
+    <a href="categoria.jsp?cat=offerte">Offerte</a>
+    <a href="categoria.jsp?cat=novita">Novità</a>
+  </div>
 </header>
 
-<main class="main-container">
+<!-- Il resto della pagina -->
+</body>
+</html>
