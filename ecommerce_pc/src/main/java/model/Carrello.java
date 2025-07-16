@@ -37,5 +37,10 @@ public class Carrello {
     public boolean isEmpty() {
         return elementi.isEmpty();
     }
+    
+    public ElementoCarrello getElemento(int idProdotto) {
+        return elementi.get(idProdotto);
+    }
+
 
 }
