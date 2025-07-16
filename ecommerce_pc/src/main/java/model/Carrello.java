@@ -41,6 +41,14 @@ public class Carrello {
     public ElementoCarrello getElemento(int idProdotto) {
         return elementi.get(idProdotto);
     }
+    
+    public Map<Prodotto, Integer> getProdottiQuantita() {
+        Map<Prodotto, Integer> mappa = new HashMap<>();
+        for (ElementoCarrello elemento : elementi.values()) {
+            mappa.put(elemento.getProdotto(), elemento.getQuantita());
+        }
+        return mappa;
+    }
 
 
 }
