@@ -28,7 +28,7 @@ public class ConfermaOrdineServlet extends HttpServlet {
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
-        Cliente cliente = (Cliente) request.getSession().getAttribute("utente");
+        Cliente cliente = (Cliente) request.getSession().getAttribute("cliente");
 
         if (carrello == null || cliente == null) {
             response.sendRedirect("carrello.jsp");
