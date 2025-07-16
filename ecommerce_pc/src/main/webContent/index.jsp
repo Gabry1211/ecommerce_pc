@@ -1,30 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="model.*, java.util.*" %>
 <%@ include file="fragments/header.jsp" %>
 
-<div class="homepage">
+<div class="homepage-container">
     <h2>Benvenuto su <span class="techzone">TechZone</span></h2>
-    <p class="slogan">Acquista PC assemblati e componenti hardware di qualità!</p>
+    <p class="slogan">Scopri le ultime novità e acquista i migliori componenti hardware!</p>
 
-    <div class="homepage-cards">
-        <div class="homepage-card">
-            <h3>🖥️ Catalogo Prodotti</h3>
-            <p>Esplora il nostro vasto assortimento di PC e componenti.</p>
-            <a href="VisualizzaProdottiServlet" class="button-link">Vai ai prodotti</a>
-        </div>
+    <!-- Sezione Prodotti Nuovi -->
+    <section class="section-nuovi-prodotti">
+        <h3>🆕 Prodotti Nuovi</h3>
+        <div class="card-container">
+            <% 
+                ProdottoDAO prodottoDAO = new ProdottoDAO();
+                List<Prodotto> nuoviProdotti = prodottoDAO.doRetrieveUltimi(4); // metodo da creare se non esiste
 
-        <div class="homepage-card">
-            <h3>🔐 Login</h3>
-            <p>Accedi al tuo account cliente, venditore o amministratore.</p>
-            <a href="login.jsp" class="button-link">Effettua il login</a>
+                for (Prodotto p : nuoviProdotti) {
+            %>
+                <div class="card-prodotto">
+                    <img src="ImmagineServlet?file=<%= p.getImmagine() %>" alt="img">
+                    <h4><%= p.getDescrizione() %></h4>
+                    <p>€<%= String.format("%.2f", p.getPrezzo()) %></p>
+                    <a href="dettagliProdotto.jsp?id=<%= p.getIdProdotto() %>" class="btn-dettagli">Dettagli</a>
+                </div>
+            <% } %>
         </div>
+    </section>
 
-        <div class="homepage-card">
-            <h3>📝 Registrati</h3>
-            <p>Non hai ancora un account? Registrati ora!</p>
-            <a href="registrazione.jsp" class="button-link">Registrati</a>
+    <!-- Sezione per Categoria -->
+    <section class="section-categorie">
+        <h3>🗂️ Categorie</h3>
+        <div class="categorie-container">
+            <a href="VisualizzaProdottiServlet?tipo=PC" class="categoria-card">🖥️ PC</a>
+            <a href="VisualizzaProdottiServlet?tipo=SSD" class="categoria-card">💾 SSD</a>
+            <a href="VisualizzaProdottiServlet?tipo=GPU" class="categoria-card">🎮 GPU</a>
+            <a href="VisualizzaProdottiServlet?tipo=RAM" class="categoria-card">🧠 RAM</a>
+            <a href="VisualizzaProdottiServlet?tipo=HDD" class="categoria-card">📀 HDD</a>
+            <a href="VisualizzaProdottiServlet?tipo=Alimentatore" class="categoria-card">⚡ PSU</a>
+            <a href="VisualizzaProdottiServlet?tipo=Scheda Madre" class="categoria-card">🧩 Schede Madri</a>
         </div>
-    </div>
+    </section>
 </div>
 
 <%@ include file="fragments/footer.jsp" %>

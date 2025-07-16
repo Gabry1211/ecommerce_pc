@@ -231,6 +231,39 @@ public class ProdottoDAO {
 		    }
 		    return 0; // o eccezione se preferisci
 		}
+		
+		public List<Prodotto> doRetrieveUltimi(int n) {
+		    List<Prodotto> prodotti = new ArrayList<>();
+
+		    String sql = "SELECT * FROM prodotto ORDER BY ID_Prodotto DESC LIMIT ?";
+
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql)) {
+
+		        ps.setInt(1, n);
+		        try (ResultSet rs = ps.executeQuery()) {
+		            while (rs.next()) {
+		                Prodotto p = new Prodotto();
+		                p.setIdProdotto(rs.getInt("ID_Prodotto"));
+		                p.setDescrizione(rs.getString("Descrizione"));
+		                p.setPrezzo(rs.getDouble("Prezzo"));
+		                p.setTipo(rs.getString("Tipo"));
+		                p.setQuantita(rs.getInt("Quantita"));
+		                p.setImmagine(rs.getString("Percorso_Immagine"));
+		                p.setIdVenditore(rs.getInt("ID_Venditore"));
+		                p.setCfAdmin(rs.getString("Codice_Fiscale_Amministratore"));
+
+		                prodotti.add(p);
+		            }
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return prodotti;
+		}
+
 
 
 

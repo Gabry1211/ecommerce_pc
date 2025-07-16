@@ -107,5 +107,9 @@ public class Prodotto {
     public void setQuantita(int quantita) {
     	this.quantita = quantita;
     }
+    
+    public void setCfAdmin(String cfAdmin) {
+    	this.cfAdmin = cfAdmin;
+    }
 
 }
