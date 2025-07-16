@@ -1,10 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="model.*, java.util.*" %>
 <%@ page session="true" %>
 
 <%
-    // Controllo login cliente
     session = request.getSession(false);
     if (session == null || session.getAttribute("cliente") == null) {
         response.sendRedirect("login.jsp");
@@ -38,32 +36,38 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Dettagli prodotto - <%= prodotto.getDescrizione() %></title>
+    <title><%= prodotto.getDescrizione() %> | Dettagli Prodotto</title>
     <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 <jsp:include page="fragments/header.jsp" />
 
-<div class="dettagli-prodotto">
-    <h2><%= prodotto.getDescrizione() %></h2>
-    <img src="ImmagineServlet?file=<%= prodotto.getImmagine() %>" alt="Immagine prodotto" style="max-width:300px; max-height:300px;">
-    <p><strong>Prezzo:</strong> €<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
-    <p><strong>Tipo:</strong> <%= prodotto.getTipo() %></p>
+<div class="container-prodotto">
+    <div class="img-box">
+        <img src="ImmagineServlet?file=<%= prodotto.getImmagine() %>" alt="Immagine prodotto">
+    </div>
 
-    <form action="AggiungiAlCarrelloServlet" method="post">
-        <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
-        <input type="hidden" name="descrizione" value="<%= prodotto.getDescrizione() %>">
-        <input type="hidden" name="prezzo" value="<%= prodotto.getPrezzo() %>">
-        <input type="hidden" name="tipo" value="<%= prodotto.getTipo() %>">
-        <input type="hidden" name="immagine" value="<%= prodotto.getImmagine() %>">
-        <input type="hidden" name="cfAdmin" value="<%= prodotto.getCfAdmin() %>">
-        <input type="hidden" name="idVenditore" value="<%= prodotto.getIdVenditore() %>">
+    <div class="info-box">
+        <h1><%= prodotto.getDescrizione() %></h1>
+        <p class="tipo">Tipo: <%= prodotto.getTipo() %></p>
+        <p class="prezzo">Prezzo: €<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
+        <p class="disponibilita">Disponibilità: <%= prodotto.getQuantita() %> pezzi</p>
 
-        <label for="quantita">Quantità:</label>
-        <input type="number" name="quantita" id="quantita" value="1" min="1" required>
+        <form action="AggiungiAlCarrelloServlet" method="post" class="form-carrello">
+            <input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
+            <input type="hidden" name="descrizione" value="<%= prodotto.getDescrizione() %>">
+            <input type="hidden" name="prezzo" value="<%= prodotto.getPrezzo() %>">
+            <input type="hidden" name="tipo" value="<%= prodotto.getTipo() %>">
+            <input type="hidden" name="immagine" value="<%= prodotto.getImmagine() %>">
+            <input type="hidden" name="cfAdmin" value="<%= prodotto.getCfAdmin() %>">
+            <input type="hidden" name="idVenditore" value="<%= prodotto.getIdVenditore() %>">
 
-        <button type="submit">Aggiungi al carrello</button>
-    </form>
+            <label for="quantita">Quantità:</label>
+            <input type="number" id="quantita" name="quantita" value="1" min="1" max="<%= prodotto.getQuantita() %>" required>
+
+            <button type="submit">Aggiungi al carrello</button>
+        </form>
+    </div>
 </div>
 
 <jsp:include page="fragments/footer.jsp" />
