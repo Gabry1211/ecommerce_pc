@@ -23,34 +23,49 @@ public class AggiornaQuantitaCarrelloServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int idProdotto = Integer.parseInt(request.getParameter("idProdotto"));
-        int nuovaQuantita = Integer.parseInt(request.getParameter("quantita"));
+		        HttpSession session = request.getSession(false);
+		        if (session == null) {
+		            response.sendRedirect("login.jsp");
+		            return;
+		        }
 
-        HttpSession session = request.getSession();
-        Carrello carrello = (Carrello) session.getAttribute("carrello");
+		        Carrello carrello = (Carrello) session.getAttribute("carrello");
+		        if (carrello == null) {
+		            response.sendRedirect("carrello.jsp");
+		            return;
+		        }
 
-        if (carrello == null) {
-            response.sendRedirect("carrello.jsp");
-            return;
-        }
+		        try {
+		            int idProdotto = Integer.parseInt(request.getParameter("idProdotto"));
+		            int nuovaQuantita = Integer.parseInt(request.getParameter("quantita"));
 
-        ElementoCarrello elem = carrello.getElemento(idProdotto);
-        if (elem == null) {
-            response.sendRedirect("carrello.jsp");
-            return;
-        }
+		            ProdottoDAO prodottoDAO = new ProdottoDAO();
+		            Prodotto prodotto = prodottoDAO.doRetrieveById(idProdotto);
 
-        ProdottoDAO dao = new ProdottoDAO();
-        Prodotto prodotto = dao.doRetrieveById(idProdotto);
+		            if (prodotto == null) {
+		                session.setAttribute("erroreQuantita", "Prodotto non trovato.");
+		                response.sendRedirect("carrello.jsp");
+		                return;
+		            }
 
-        if (nuovaQuantita <= prodotto.getQuantita()) {
-            elem.setQuantita(nuovaQuantita);
-            session.setAttribute("carrello", carrello);
-        } else {
-            session.setAttribute("erroreQuantita", "Non puoi aggiungere più di " + prodotto.getQuantita() + " pezzi di \"" + prodotto.getDescrizione() + "\".");
-        }
+		            int disponibilita = prodotto.getQuantita();
 
-        response.sendRedirect("carrello.jsp");
+		            if (nuovaQuantita <= disponibilita && nuovaQuantita > 0) {
+		                ElementoCarrello elemento = carrello.getElemento(idProdotto);
+		                if (elemento != null) {
+		                    elemento.setQuantita(nuovaQuantita);
+		                    session.removeAttribute("erroreQuantita");
+		                }
+		            } else {
+		                session.setAttribute("erroreQuantita",
+		                        "Quantità richiesta superiore alla disponibilità (" + disponibilita + ").");
+		            }
+
+		        } catch (NumberFormatException e) {
+		            session.setAttribute("erroreQuantita", "Valore non valido.");
+		        }
+
+		        response.sendRedirect("carrello.jsp");
+		    }
+
 	}
-
-}
