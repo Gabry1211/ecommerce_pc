@@ -46,7 +46,7 @@
             </td>
             <td>€<%= String.format("%.2f", elem.getTotale()) %></td>
             <td>
-                <form action="rimuoviCarrello" method="post" style="display:inline">
+                <form action="RimuoviDalCarrelloServlet" method="post" style="display:inline">
                     <input type="hidden" name="idProdotto" value="<%= id %>">
                     <input type="submit" value="Rimuovi">
                 </form>
