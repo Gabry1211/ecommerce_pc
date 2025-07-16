@@ -37,6 +37,7 @@
         <th>Descrizione</th>
         <th>Prezzo</th>
         <th>Tipo</th>
+        <th>Quantità</th>
         <th>Modifica</th>
     </tr>
 
@@ -48,6 +49,7 @@
         <td><%= p.getDescrizione() %></td>
         <td><%= p.getPrezzo() %> €</td>
         <td><%= p.getTipo() %></td>
+        <td><%= p.getQuantita() %></td>
         <td>
             <form action="modificaProdotto.jsp" method="get">
                 <input type="hidden" name="id" value="<%= p.getIdProdotto() %>">
@@ -60,10 +62,11 @@
         if (p.getIdProdotto() == idToEdit) {
 %>
     <tr>
-        <td colspan="5">
+        <td colspan="6">
             <h3>Modifica Prodotto ID <%= p.getIdProdotto() %></h3>
             <form action="ModificaProdottoServlet" method="post">
                 <input type="hidden" name="idProdotto" value="<%= p.getIdProdotto() %>">
+
                 <label>Descrizione:</label><br>
                 <input type="text" name="descrizione" value="<%= p.getDescrizione() %>" required><br><br>
 
@@ -72,6 +75,9 @@
 
                 <label>Tipo:</label><br>
                 <input type="text" name="tipo" value="<%= p.getTipo() %>" required><br><br>
+
+                <label>Quantità:</label><br>
+                <input type="number" name="quantita" value="<%= p.getQuantita() %>" min="0" required><br><br>
 
                 <input type="submit" value="Salva modifiche">
             </form>

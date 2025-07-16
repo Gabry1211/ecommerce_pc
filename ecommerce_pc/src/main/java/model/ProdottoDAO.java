@@ -82,12 +82,13 @@ public class ProdottoDAO {
 		public void doUpdate(Prodotto p) {
 		    try (Connection con = DBConnection.getConnection();
 		         PreparedStatement ps = con.prepareStatement(
-		             "UPDATE prodotto SET Descrizione = ?, Prezzo = ?, Tipo = ? WHERE ID_Prodotto = ?")) {
+		             "UPDATE prodotto SET Descrizione = ?, Prezzo = ?, Tipo = ?, Quantita = ? WHERE ID_Prodotto = ?")) {
 
 		        ps.setString(1, p.getDescrizione());
 		        ps.setDouble(2, p.getPrezzo());
 		        ps.setString(3, p.getTipo());
-		        ps.setInt(4, p.getIdProdotto());
+		        ps.setInt(4, p.getQuantita());    // aggiunto per aggiornare la quantità
+		        ps.setInt(5, p.getIdProdotto());
 
 		        ps.executeUpdate();
 
@@ -95,6 +96,7 @@ public class ProdottoDAO {
 		        e.printStackTrace();
 		    }
 		}
+
 		
 		public void doDelete(int idProdotto) {
 			try (Connection con = DBConnection.getConnection()) {
