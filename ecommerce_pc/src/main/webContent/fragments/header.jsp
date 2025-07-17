@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+ <%@ page import="model.*" %>
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -40,10 +41,13 @@
         <a href="registrazione.jsp">Registrati</a>
     <% } %>
 
-    <a href="carrello.jsp">Carrello (<span id="carrello-count"><%= 
-    session.getAttribute("carrello") != null ? 
-        ((model.Carrello)session.getAttribute("carrello")).getElementi().size() : 0 
-	%></span>)</a>
+    <a href="carrello.jsp">Carrello (<span id="cart-count">
+  		<%
+    		Carrello carrello = (Carrello) session.getAttribute("carrello");
+    		int totale = (carrello != null) ? carrello.getTotaleQuantita() : 0;
+    		out.print(totale);
+  		%>
+	</span>)</a>
 </div>
 
   </nav>

@@ -49,6 +49,30 @@ public class Carrello {
         }
         return mappa;
     }
+    
+    public int getTotaleQuantita() {
+        int totale = 0;
+        for (ElementoCarrello elem : elementi.values()) {
+            totale += elem.getQuantita();
+        }
+        return totale;
+    }
+    
+    public void aggiungi(Prodotto prodotto, int quantita) {
+        int idProdotto = prodotto.getIdProdotto();
+        
+        // Se il prodotto è già nel carrello, aumenta la quantità
+        if (elementi.containsKey(idProdotto)) {
+            ElementoCarrello esistente = elementi.get(idProdotto);
+            esistente.setQuantita(esistente.getQuantita() + quantita);
+        } else {
+            // Altrimenti, crea un nuovo elemento e aggiungilo
+            ElementoCarrello nuovo = new ElementoCarrello();
+            nuovo.setProdotto(prodotto);
+            nuovo.setQuantita(quantita);
+            elementi.put(idProdotto, nuovo);
+        }
+    }
 
 
 }

@@ -17,51 +17,47 @@ public class AggiungiAlCarrelloAjaxServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
+		String idProdottoParam = request.getParameter("idProdotto");
+        String quantitaParam = request.getParameter("quantita");
 
-        String idProdottoStr = request.getParameter("idProdotto");
-        String quantitaStr = request.getParameter("quantita");
-
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-
-        if (idProdottoStr == null || quantitaStr == null) {
-            String json = "{\"success\":false,\"message\":\"Parametri mancanti\"}";
-            response.getWriter().write(json);
+        if (idProdottoParam == null || quantitaParam == null) {
+            response.setStatus(400);
+            response.getWriter().write("Parametri mancanti");
             return;
         }
 
+        int idProdotto;
+        int quantita;
         try {
-            int idProdotto = Integer.parseInt(idProdottoStr);
-            int quantita = Integer.parseInt(quantitaStr);
-
-            // Recupera o crea carrello
-            Carrello carrello = (Carrello) session.getAttribute("carrello");
-            if (carrello == null) {
-                carrello = new Carrello();
-                session.setAttribute("carrello", carrello);
-            }
-
-            // Recupera prodotto da DB
-            ProdottoDAO prodottoDAO = new ProdottoDAO();
-            Prodotto prodotto = prodottoDAO.doRetrieveById(idProdotto);
-
-            if (prodotto == null) {
-                String json = "{\"success\":false,\"message\":\"Prodotto non trovato\"}";
-                response.getWriter().write(json);
-                return;
-            }
-
-            carrello.aggiungiProdotto(prodotto);
-
-            // Risposta JSON manuale
-            String json = "{\"success\":true,\"numeroProdotti\":" + carrello.getElementi().size() + "}";
-            response.getWriter().write(json);
-
+            idProdotto = Integer.parseInt(idProdottoParam);
+            quantita = Integer.parseInt(quantitaParam);
         } catch (NumberFormatException e) {
-            String json = "{\"success\":false,\"message\":\"Parametri non validi\"}";
-            response.getWriter().write(json);
+            response.setStatus(400);
+            response.getWriter().write("Parametri non validi");
+            return;
         }
+
+        ProdottoDAO prodottoDAO = new ProdottoDAO();
+        Prodotto prodotto = prodottoDAO.doRetrieveById(idProdotto);
+
+        if (prodotto == null) {
+            response.setStatus(404);
+            response.getWriter().write("Prodotto non trovato");
+            return;
+        }
+
+        HttpSession session = request.getSession();
+        Carrello carrello = (Carrello) session.getAttribute("carrello");
+        if (carrello == null) {
+            carrello = new Carrello();
+            session.setAttribute("carrello", carrello);
+        }
+
+        carrello.aggiungi(prodotto, quantita);
+
+        // Rispondi con il totale aggiornato
+        response.setContentType("text/plain");
+        response.getWriter().write(String.valueOf(carrello.getTotaleQuantita()));
 	}
 
 }

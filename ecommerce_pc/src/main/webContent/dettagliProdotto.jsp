@@ -39,23 +39,33 @@
     <title><%= prodotto.getDescrizione() %> | Dettagli Prodotto</title>
     <link rel="stylesheet" href="styles/style.css">
     <script>
-    function aggiungiAlCarrelloAJAX(idProdotto) {
-        const quantita = document.getElementById("quantita").value;
+    function aggiungiAlCarrello(event) {
+        event.preventDefault(); // ⚠️ Blocca l'invio del form
+
+        const form = document.getElementById("formCarrello");
+        const idProdotto = form.querySelector("input[name='idProdotto']").value;
+        const quantita = form.querySelector("input[name='quantita']").value;
 
         fetch("AggiungiAlCarrelloAjaxServlet", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
             body: "idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(quantita)
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) throw new Error("Errore nell'aggiunta al carrello");
+            return response.text();
+        })
         .then(data => {
-            if (data.success) {
-                document.getElementById("carrello-counter").innerText = data.numeroProdotti;
-                // Nessun alert, ma puoi mostrare un messaggio discreto se vuoi
-            } else {
-                console.error("Errore:", data.message);
-            }
+            // Aggiorna il contatore del carrello (supponiamo sia nel tag con id="cart-count")
+            document.getElementById("cart-count").innerText = data;
+        })
+        .catch(error => {
+            console.error(error);
         });
+
+        return false;
     }
 </script>
 </head>

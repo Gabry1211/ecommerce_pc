@@ -8,6 +8,8 @@ public class ElementoCarrello {
         this.prodotto = prodotto;
         this.quantita = quantita;
     }
+    
+    public ElementoCarrello() {}
 
     public Prodotto getProdotto() { return prodotto; }
     public int getQuantita() { return quantita; }
@@ -15,6 +17,10 @@ public class ElementoCarrello {
 
     public double getTotale() {
         return prodotto.getPrezzo() * quantita;
+    }
+    
+    public void setProdotto(Prodotto prodotto) {
+    	this.prodotto = prodotto;
     }
 
 }
