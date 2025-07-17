@@ -51,6 +51,21 @@
 
         xhr.send("idProdotto=" + encodeURIComponent(idProdotto));
     }
+    function svuotaCarrello() {
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "SvuotaCarrelloAjaxServlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Rimuove tutti gli elementi dal DOM e aggiorna il totale
+                document.querySelector(".carrello-items").innerHTML = "<h3>Il carrello è vuoto</h3>";
+                document.querySelector(".carrello-totale").innerHTML = "";
+            }
+        };
+
+        xhr.send(); // Nessun parametro necessario
+    }
 </script>
 </head>
 <body>
@@ -97,9 +112,7 @@
 		<p><strong>Totale: <span id="totaleCarrello">€<%= String.format("%.2f", carrello.getTotale()) %></span></strong></p>
 
 
-        <form action="SvuotaCarrelloServlet" method="post" class="inline-form">
-            <button type="submit" class="btn danger">Svuota Carrello</button>
-        </form>
+        <button type="button" class="btn danger" onclick="svuotaCarrello()">Svuota Carrello</button>
 
         <form action="ConfermaOrdineServlet" method="post" class="inline-form">
             <button type="submit" class="btn conferma">Conferma Ordine</button>
