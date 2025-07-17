@@ -8,6 +8,28 @@
     <meta charset="UTF-8">
     <title>Carrello</title>
     <link rel="stylesheet" href="css/style.css">
+    <script>
+function aggiornaQuantita(idProdotto) {
+  const quantita = document.querySelector(`#qta-${idProdotto}`).value;
+
+  fetch('AggiornaQuantitaAjaxServlet', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded'
+    },
+    body: `idProdotto=${idProdotto}&quantita=${quantita}`
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      document.querySelector(`#totale-${idProdotto}`).innerText = '€' + data.totaleProdotto.toFixed(2);
+      document.querySelector('#totaleCarrello').innerText = '€' + data.totaleCarrello.toFixed(2);
+    } else {
+      alert(data.message || 'Errore aggiornamento quantità.');
+    }
+  });
+}
+</script>
 </head>
 <body>
 
@@ -35,27 +57,24 @@
                 <div class="carrello-dettagli">
                     <h4><%= elem.getProdotto().getDescrizione() %></h4>
                     <p>Prezzo: €<%= String.format("%.2f", elem.getProdotto().getPrezzo()) %></p>
-                    <p>Totale: €<%= String.format("%.2f", elem.getTotale()) %></p>
+                    <p>Totale: <span id="totale-<%= id %>">€<%= String.format("%.2f", elem.getTotale()) %></span></p>
                 </div>
 
                 <div class="carrello-azioni">
-                    <form action="AggiornaQuantitaCarrelloServlet" method="post" class="quantita-form">
-                        <input type="hidden" name="idProdotto" value="<%= id %>">
-                        <input type="number" name="quantita" value="<%= elem.getQuantita() %>" min="1" required>
-                        <button type="submit" class="btn aggiorna">Aggiorna</button>
-                    </form>
+    				<input type="number" id="qta-<%= id %>" value="<%= elem.getQuantita() %>" min="1" required>
+   					<button type="button" class="btn aggiorna" onclick="aggiornaQuantita(<%= id %>)">Aggiorna</button>
 
-                    <form action="RimuoviDalCarrelloServlet" method="post" class="rimuovi-form">
-                        <input type="hidden" name="idProdotto" value="<%= id %>">
-                        <button type="submit" class="btn rimuovi">Rimuovi</button>
-                    </form>
-                </div>
-            </div>
+    				<form action="RimuoviDalCarrelloServlet" method="post" class="rimuovi-form">
+        				<input type="hidden" name="idProdotto" value="<%= id %>">
+        				<button type="submit" class="btn rimuovi">Rimuovi</button>
+    				</form>
+			</div>
         <% } %>
     </div>
 
     <div class="carrello-totale">
-        <p><strong>Totale: €<%= String.format("%.2f", carrello.getTotale()) %></strong></p>
+		<p><strong>Totale: <span id="totaleCarrello">€<%= String.format("%.2f", carrello.getTotale()) %></span></strong></p>
+
 
         <form action="SvuotaCarrelloServlet" method="post" class="inline-form">
             <button type="submit" class="btn danger">Svuota Carrello</button>
