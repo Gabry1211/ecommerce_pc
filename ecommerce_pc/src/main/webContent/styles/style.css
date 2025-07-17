@@ -16,6 +16,20 @@
     font-family: Arial, sans-serif;
 }
 
+.nav-buttons button {
+    background-color: #FF9900;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.nav-buttons button:hover {
+    background-color: #e68a00;
+}
+
 .logo a {
     color: white;
     font-size: 24px;
