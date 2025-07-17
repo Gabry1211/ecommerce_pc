@@ -64,7 +64,7 @@ public class Carrello {
         // Se il prodotto è già nel carrello, aumenta la quantità
         if (elementi.containsKey(idProdotto)) {
             ElementoCarrello esistente = elementi.get(idProdotto);
-            esistente.setQuantita(esistente.getQuantita() + quantita);
+            esistente.setQuantita(esistente.getQuantita());
         } else {
             // Altrimenti, crea un nuovo elemento e aggiungilo
             ElementoCarrello nuovo = new ElementoCarrello();

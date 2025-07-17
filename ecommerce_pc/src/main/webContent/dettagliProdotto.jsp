@@ -106,7 +106,7 @@
         	data-idvenditore="<%= prodotto.getIdVenditore() %>">
         	Aggiungi al carrello
     	</button>
-</div>
+	</div>
     </div>
 </div>
 
