@@ -39,33 +39,24 @@
     <title><%= prodotto.getDescrizione() %> | Dettagli Prodotto</title>
     <link rel="stylesheet" href="styles/style.css">
     <script>
-function aggiungiAlCarrello(event) {
-    event.preventDefault();
+    function aggiungiAlCarrelloAJAX(idProdotto) {
+        const quantita = document.getElementById("quantita").value;
 
-    const form = document.getElementById('formCarrello');
-    const formData = new FormData(form);
-
-    fetch('AggiungiAlCarrelloAjaxServlet', {
-        method: 'POST',
-        body: new URLSearchParams(formData)  // invia come application/x-www-form-urlencoded
-    })
-    .then(response => response.json())
-    .then(data => {
-        if(data.success) {
-            // aggiorna il contatore nel header
-            document.getElementById('carrello-count').textContent = data.numeroProdotti;
-            alert('Prodotto aggiunto al carrello!');
-        } else {
-            alert('Errore nell\'aggiunta al carrello: ' + data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Errore AJAX:', error);
-        alert('Errore nella richiesta AJAX.');
-    });
-
-    return false; // impedisce il submit normale
-}
+        fetch("AggiungiAlCarrelloAjaxServlet", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(quantita)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById("carrello-counter").innerText = data.numeroProdotti;
+                // Nessun alert, ma puoi mostrare un messaggio discreto se vuoi
+            } else {
+                console.error("Errore:", data.message);
+            }
+        });
+    }
 </script>
 </head>
 <body>

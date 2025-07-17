@@ -52,8 +52,6 @@ public class AggiungiAlCarrelloAjaxServlet extends HttpServlet {
                 return;
             }
 
-            prodotto.setQuantita(quantita); // imposta quantità da aggiungere
-
             carrello.aggiungiProdotto(prodotto);
 
             // Risposta JSON manuale
