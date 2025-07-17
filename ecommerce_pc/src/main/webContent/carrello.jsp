@@ -62,7 +62,7 @@ function aggiornaQuantita(idProdotto) {
 
                 <div class="carrello-azioni">
     				<input type="number" id="qta-<%= id %>" value="<%= elem.getQuantita() %>" min="1" required>
-   					<button type="button" class="btn aggiorna" onclick="aggiornaQuantita(<%= id %>)">Aggiorna</button>
+   					<button type="button" class="btn aggiorna" onclick="AggiornaQuantitaAjaxServlet">Aggiorna</button>
 
     				<form action="RimuoviDalCarrelloServlet" method="post" class="rimuovi-form">
         				<input type="hidden" name="idProdotto" value="<%= id %>">
