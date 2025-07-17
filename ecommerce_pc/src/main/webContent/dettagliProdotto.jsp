@@ -39,33 +39,41 @@
     <title><%= prodotto.getDescrizione() %> | Dettagli Prodotto</title>
     <link rel="stylesheet" href="styles/style.css">
     <script>
-    function aggiungiAlCarrello(event) {
-        event.preventDefault(); // ⚠️ Blocca l'invio del form
+    function aggiungiAlCarrello(button) {
+        const idProdotto = button.getAttribute("data-id");
+        const descrizione = button.getAttribute("data-descrizione");
+        const prezzo = button.getAttribute("data-prezzo");
+        const tipo = button.getAttribute("data-tipo");
+        const immagine = button.getAttribute("data-immagine");
+        const cfAdmin = button.getAttribute("data-cfadmin");
+        const idVenditore = button.getAttribute("data-idvenditore");
+        const quantita = document.getElementById("quantita").value;
 
-        const form = document.getElementById("formCarrello");
-        const idProdotto = form.querySelector("input[name='idProdotto']").value;
-        const quantita = form.querySelector("input[name='quantita']").value;
+        const params = new URLSearchParams();
+        params.append("idProdotto", idProdotto);
+        params.append("descrizione", descrizione);
+        params.append("prezzo", prezzo);
+        params.append("tipo", tipo);
+        params.append("immagine", immagine);
+        params.append("cfAdmin", cfAdmin);
+        params.append("idVenditore", idVenditore);
+        params.append("quantita", quantita);
 
         fetch("AggiungiAlCarrelloAjaxServlet", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded"
-            },
-            body: "idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(quantita)
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: params
         })
         .then(response => {
-            if (!response.ok) throw new Error("Errore nell'aggiunta al carrello");
+            if (!response.ok) throw new Error("Errore AJAX");
             return response.text();
         })
-        .then(data => {
-            // Aggiorna il contatore del carrello (supponiamo sia nel tag con id="cart-count")
-            document.getElementById("cart-count").innerText = data;
+        .then(nuovaQuantita => {
+            document.getElementById("carrelloCounter").innerText = nuovaQuantita;
         })
         .catch(error => {
-            console.error(error);
+            console.error("Errore:", error);
         });
-
-        return false;
     }
 </script>
 </head>
@@ -83,20 +91,22 @@
         <p class="prezzo">Prezzo: €<%= String.format("%.2f", prodotto.getPrezzo()) %></p>
         <p class="disponibilita">Disponibilità: <%= prodotto.getQuantita() %> pezzi</p>
 
-        <form id="formCarrello" class="form-carrello" onsubmit="return aggiungiAlCarrello(event)">
-    		<input type="hidden" name="idProdotto" value="<%= prodotto.getIdProdotto() %>">
-    		<input type="hidden" name="descrizione" value="<%= prodotto.getDescrizione() %>">
-    		<input type="hidden" name="prezzo" value="<%= prodotto.getPrezzo() %>">
-    		<input type="hidden" name="tipo" value="<%= prodotto.getTipo() %>">
-    		<input type="hidden" name="immagine" value="<%= prodotto.getImmagine() %>">
-    		<input type="hidden" name="cfAdmin" value="<%= prodotto.getCfAdmin() %>">
-    		<input type="hidden" name="idVenditore" value="<%= prodotto.getIdVenditore() %>">
+        <div class="aggiunta-carrello-container">
+    	<label for="quantita">Quantità:</label>
+    	<input type="number" id="quantita" value="1" min="1" max="<%= prodotto.getQuantita() %>" required>
 
-    		<label for="quantita">Quantità:</label>
-    		<input type="number" id="quantita" name="quantita" value="1" min="1" max="<%= prodotto.getQuantita() %>" required>
-
-    		<button type="submit">Aggiungi al carrello</button>
-		</form>
+    	<button type="button"
+        	onclick="aggiungiAlCarrello(this)"
+        	data-id="<%= prodotto.getIdProdotto() %>"
+        	data-descrizione="<%= prodotto.getDescrizione() %>"
+        	data-prezzo="<%= prodotto.getPrezzo() %>"
+        	data-tipo="<%= prodotto.getTipo() %>"
+        	data-immagine="<%= prodotto.getImmagine() %>"
+        	data-cfadmin="<%= prodotto.getCfAdmin() %>"
+        	data-idvenditore="<%= prodotto.getIdVenditore() %>">
+        	Aggiungi al carrello
+    	</button>
+</div>
     </div>
 </div>
 

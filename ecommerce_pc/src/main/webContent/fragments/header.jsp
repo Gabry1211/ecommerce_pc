@@ -41,12 +41,11 @@
         <a href="registrazione.jsp">Registrati</a>
     <% } %>
 
-    <a href="carrello.jsp">Carrello (<span id="cart-count">
-  		<%
-    		Carrello carrello = (Carrello) session.getAttribute("carrello");
-    		int totale = (carrello != null) ? carrello.getTotaleQuantita() : 0;
-    		out.print(totale);
-  		%>
+    <a href="carrello.jsp">Carrello (<span id="carrelloCounter">
+    	<% 
+        	model.Carrello carrello = (model.Carrello) session.getAttribute("carrello");
+        	out.print(carrello != null ? carrello.getTotaleQuantita() : 0);
+    	%>
 	</span>)</a>
 </div>
 
