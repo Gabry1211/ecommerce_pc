@@ -40,7 +40,10 @@
         <a href="registrazione.jsp">Registrati</a>
     <% } %>
 
-    <a href="carrello.jsp">Carrello</a>
+    <a href="carrello.jsp">Carrello (<span id="carrello-count"><%= 
+    session.getAttribute("carrello") != null ? 
+        ((model.Carrello)session.getAttribute("carrello")).getElementi().size() : 0 
+	%></span>)</a>
 </div>
 
   </nav>
