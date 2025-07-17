@@ -9,26 +9,29 @@
     <title>Carrello</title>
     <link rel="stylesheet" href="css/style.css">
     <script>
-function aggiornaQuantita(idProdotto) {
-  const quantita = document.querySelector(`#qta-${idProdotto}`).value;
+    function aggiornaQuantita(idProdotto) {
+        var quantitaInput = document.getElementById("qta-" + idProdotto);
+        if (!quantitaInput) {
+            console.error("Elemento input quantità non trovato per idProdotto: " + idProdotto);
+            return;
+        }
+        var nuovaQuantita = quantitaInput.value;
 
-  fetch('AggiornaQuantitaAjaxServlet', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded'
-    },
-    body: `idProdotto=${idProdotto}&quantita=${quantita}`
-  })
-  .then(res => res.json())
-  .then(data => {
-    if (data.success) {
-      document.querySelector(`#totale-${idProdotto}`).innerText = '€' + data.totaleProdotto.toFixed(2);
-      document.querySelector('#totaleCarrello').innerText = '€' + data.totaleCarrello.toFixed(2);
-    } else {
-      alert(data.message || 'Errore aggiornamento quantità.');
+        // Esempio: AJAX per aggiornare quantità nel carrello (usa XMLHttpRequest o fetch)
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "AggiornaQuantitaAjaxServlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Puoi gestire risposta, aggiornare UI ecc.
+                console.log("Quantità aggiornata con successo");
+                location.reload();  // o aggiornare dinamicamente senza ricaricare
+            }
+        };
+
+        xhr.send("idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(nuovaQuantita));
     }
-  });
-}
 </script>
 </head>
 <body>
@@ -62,12 +65,13 @@ function aggiornaQuantita(idProdotto) {
 
                 <div class="carrello-azioni">
     				<input type="number" id="qta-<%= id %>" value="<%= elem.getQuantita() %>" min="1" required>
-   					<button type="button" class="btn aggiorna" onclick="AggiornaQuantitaAjaxServlet">Aggiorna</button>
+   					<button type="button" class="btn aggiorna" onclick="aggiornaQuantita(<%= id %>)">Aggiorna</button>
 
     				<form action="RimuoviDalCarrelloServlet" method="post" class="rimuovi-form">
         				<input type="hidden" name="idProdotto" value="<%= id %>">
         				<button type="submit" class="btn rimuovi">Rimuovi</button>
     				</form>
+			</div>
 			</div>
         <% } %>
     </div>
