@@ -34,25 +34,18 @@
     }
     
     function rimuoviProdotto(idProdotto) {
-        if (!confirm("Sei sicuro di voler rimuovere questo prodotto dal carrello?")) return;
-
         var xhr = new XMLHttpRequest();
-        xhr.open("POST", "RimuoviDalCarrelloAjaxServlet", true);
+        xhr.open("POST", "RimuoviDalCarrelloServlet", true);
         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                // Rimuove dal DOM l'elemento corrispondente
+                // Rimuove direttamente l'elemento dal DOM
                 var item = document.getElementById("item-" + idProdotto);
                 if (item) item.remove();
 
-                // Aggiorna il totale carrello
-                document.getElementById("totaleCarrello").textContent = "€" + xhr.responseText;
-
-                // Se il carrello è vuoto dopo la rimozione
-                if (document.getElementsByClassName("carrello-item").length === 0) {
-                    document.querySelector(".container").innerHTML = "<h3>Il carrello è vuoto</h3>";
-                }
+                // Aggiorna il totale oppure ricarica
+                location.reload();
             }
         };
 
