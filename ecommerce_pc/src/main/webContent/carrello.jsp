@@ -32,6 +32,32 @@
 
         xhr.send("idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(nuovaQuantita));
     }
+    
+    function rimuoviProdotto(idProdotto) {
+        if (!confirm("Sei sicuro di voler rimuovere questo prodotto dal carrello?")) return;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", "RimuoviDalCarrelloAjaxServlet", true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // Rimuove dal DOM l'elemento corrispondente
+                var item = document.getElementById("item-" + idProdotto);
+                if (item) item.remove();
+
+                // Aggiorna il totale carrello
+                document.getElementById("totaleCarrello").textContent = "€" + xhr.responseText;
+
+                // Se il carrello è vuoto dopo la rimozione
+                if (document.getElementsByClassName("carrello-item").length === 0) {
+                    document.querySelector(".container").innerHTML = "<h3>Il carrello è vuoto</h3>";
+                }
+            }
+        };
+
+        xhr.send("idProdotto=" + encodeURIComponent(idProdotto));
+    }
 </script>
 </head>
 <body>
@@ -56,7 +82,7 @@
     <div class="carrello-items">
         <% for (ElementoCarrello elem : carrello.getElementi()) {
                int id = elem.getProdotto().getIdProdotto(); %>
-            <div class="carrello-item">
+            <div class="carrello-item" id="item-<%= id %>">
                 <div class="carrello-dettagli">
                     <h4><%= elem.getProdotto().getDescrizione() %></h4>
                     <p>Prezzo: €<%= String.format("%.2f", elem.getProdotto().getPrezzo()) %></p>
@@ -67,10 +93,8 @@
     				<input type="number" id="qta-<%= id %>" value="<%= elem.getQuantita() %>" min="1" required>
    					<button type="button" class="btn aggiorna" onclick="aggiornaQuantita(<%= id %>)">Aggiorna</button>
 
-    				<form action="RimuoviDalCarrelloServlet" method="post" class="rimuovi-form">
-        				<input type="hidden" name="idProdotto" value="<%= id %>">
-        				<button type="submit" class="btn rimuovi">Rimuovi</button>
-    				</form>
+    				<button type="button" class="btn rimuovi" onclick="rimuoviProdotto(<%= id %>)">Rimuovi</button>
+    				
 			</div>
 			</div>
         <% } %>
