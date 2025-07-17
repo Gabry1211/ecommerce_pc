@@ -24,7 +24,7 @@
     </div>
 
 <div class="nav-buttons">
-    <a href="home.jsp">Home</a>
+    <a href="index.jsp">Home</a>
 
     <%
         String currentPage = request.getRequestURI();
