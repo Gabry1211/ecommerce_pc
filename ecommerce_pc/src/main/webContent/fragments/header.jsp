@@ -24,21 +24,23 @@
     </div>
 
     <div class="nav-buttons">
-      <a href="home.jsp">Home</a>
-      
-      <c:choose>
-        <c:when test="${not empty sessionScope.utente}">
-          <a href="profilo.jsp">Profilo</a>
-          <a href="LogoutServlet">Esci</a>
-        </c:when>
-        <c:otherwise>
-          <a href="login.jsp">Accedi</a>
-          <a href="registrazione.jsp">Registrati</a>
-        </c:otherwise>
-      </c:choose>
+    <a href="home.jsp">Home</a>
 
-      <a href="carrello.jsp">Carrello</a>
-    </div>
+    <%
+        // Ottieni il nome della pagina corrente
+        String currentPage = request.getRequestURI();
+        boolean isClienteHome = currentPage.contains("clienteHome.jsp");
+    %>
+
+    <% if (isClienteHome) { %>
+        <a href="LogoutServlet">Esci</a>
+    <% } else { %>
+        <a href="login.jsp">Accedi</a>
+        <a href="registrazione.jsp">Registrati</a>
+    <% } %>
+
+    <a href="carrello.jsp">Carrello</a>
+</div>
   </nav>
 
   <div class="categories-menu">
