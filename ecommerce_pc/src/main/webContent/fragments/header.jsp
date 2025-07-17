@@ -13,7 +13,7 @@
 <header>
   <nav class="navbar">
     <div class="logo">
-      <a href="home.jsp">TechZone</a>
+      <a href="index.jsp">TechZone</a>
     </div>
 
     <div class="search-bar">
@@ -23,16 +23,17 @@
       </form>
     </div>
 
-    <div class="nav-buttons">
+<div class="nav-buttons">
     <a href="home.jsp">Home</a>
 
     <%
-        // Ottieni il nome della pagina corrente
         String currentPage = request.getRequestURI();
-        boolean isClienteHome = currentPage.contains("clienteHome.jsp");
+        boolean showLogout = currentPage.contains("clienteHome.jsp") ||
+                             currentPage.contains("venditoreHome.jsp") ||
+                             currentPage.contains("adminHome.jsp");
     %>
 
-    <% if (isClienteHome) { %>
+    <% if (showLogout) { %>
         <a href="LogoutServlet">Esci</a>
     <% } else { %>
         <a href="login.jsp">Accedi</a>
@@ -41,6 +42,7 @@
 
     <a href="carrello.jsp">Carrello</a>
 </div>
+
   </nav>
 
   <div class="categories-menu">
