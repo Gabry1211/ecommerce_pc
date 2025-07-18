@@ -3,15 +3,16 @@
 <%@ page import="java.util.List" %>
 <%@ page import="model.Ordine" %>
 <%@ page import="model.OrdineDAO" %>
+<%@ page import="model.Cliente" %>
 <%
-    String clienteEmail = (String) session.getAttribute("cliente");
-    if (clienteEmail == null) {
+    Cliente cliente = (Cliente) session.getAttribute("cliente");
+    if (cliente == null) {
         response.sendRedirect("login.jsp");
         return;
     }
 
     OrdineDAO ordineDAO = new OrdineDAO();
-    List<Ordine> ordini = ordineDAO.doRetrieveByCliente(clienteEmail);
+    List<Ordine> ordini = ordineDAO.doRetrieveByCliente(cliente);
 %>
 <!DOCTYPE html>
 <html>

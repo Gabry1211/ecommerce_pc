@@ -99,11 +99,11 @@ public class OrdineDAO {
         return ordini;
     }
 
-    public List<Ordine> doRetrieveByCliente(String codiceFiscale) {
+    public List<Ordine> doRetrieveByCliente(Cliente cliente) {
         List<Ordine> ordini = new ArrayList<>();
         try (Connection con = DBConnection.getConnection()) {
             PreparedStatement ps = con.prepareStatement("SELECT * FROM Ordine WHERE Codice_Fiscale = ?");
-            ps.setString(1, codiceFiscale);
+            ps.setString(1, cliente.get_codiceFiscale());
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 ordini.add(mapRow(rs));
