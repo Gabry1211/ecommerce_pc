@@ -49,7 +49,7 @@
 	</span>)</a>
 	
 		<%
-    		String cliente = (String) session.getAttribute("cliente");
+    		Cliente cliente = (Cliente) session.getAttribute("cliente");
     		String currentPage1 = request.getRequestURI();
     		if (cliente != null && currentPage1.contains("clienteHome.jsp")) {
 		%>
