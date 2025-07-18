@@ -707,3 +707,34 @@ input[type="number"] {
     color: #555;
     font-size: 14px;
 }
+
+.storico-container {
+    max-width: 900px;
+    margin: 40px auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.storico-container h1 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 30px;
+    font-size: 24px;
+}
+
+.ordine-card {
+    border-top: 1px solid #ddd;
+    padding: 20px 0;
+}
+
+.ordine-info p {
+    margin: 8px 0;
+    color: #444444;
+    font-size: 15px;
+}
+
+.ordine-card:not(:last-child) {
+    border-bottom: 1px solid #ddd;
+}

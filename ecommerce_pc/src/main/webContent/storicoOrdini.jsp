@@ -40,11 +40,18 @@
                 <p><strong>Ora:</strong> <%= o.getOraOrdine() %></p>
                 <p><strong>Indirizzo:</strong> <%= o.getIndirizzoSpedizione() %>, <%= o.getCitta() %>, <%= o.getCap() %></p>
                 <p><strong>Metodo di Pagamento:</strong> <%= o.getMetodoPagamento() %></p>
-                <% if (o.getMetodoPagamento().equalsIgnoreCase("Carta di Credito")) { %>
-                    <p><strong>Carta:</strong> **** **** **** <%= o.getNumeroCarta().substring(o.getNumeroCarta().length() - 4) %></p>
-                <% } else if (o.getMetodoPagamento().equalsIgnoreCase("PayPal")) { %>
-                    <p><strong>Email PayPal:</strong> <%= o.getEmailPaypal() %></p>
-                <% } %>
+                <% 
+    				String metodo = o.getMetodoPagamento();
+    				if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) { 
+				%>
+    			<p><strong>Carta:</strong> **** **** **** <%= o.getNumeroCarta().substring(o.getNumeroCarta().length() - 4) %></p>
+				<% 
+    				} else if (metodo != null && metodo.equalsIgnoreCase("PayPal")) { 
+				%>
+    			<p><strong>Email PayPal:</strong> <%= o.getEmailPaypal() %></p>
+				<% 
+    				} 
+				%>
             </div>
         </div>
     <%
