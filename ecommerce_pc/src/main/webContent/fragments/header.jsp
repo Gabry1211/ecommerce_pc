@@ -47,6 +47,16 @@
         	out.print(carrello != null ? carrello.getTotaleQuantita() : 0);
     	%>
 	</span>)</a>
+	
+		<%
+    		String cliente = (String) session.getAttribute("cliente");
+    		String currentPage1 = request.getRequestURI();
+    		if (cliente != null && currentPage.contains("clienteHome.jsp")) {
+		%>
+    <a href="storicoOrdini.jsp">Storico Ordini</a>
+		<%
+    		}
+		%>
 </div>
 
   </nav>
