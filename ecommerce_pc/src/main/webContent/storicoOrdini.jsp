@@ -4,6 +4,7 @@
 <%@ page import="model.Ordine" %>
 <%@ page import="model.OrdineDAO" %>
 <%@ page import="model.Cliente" %>
+<%@ page import="model.ElementoOrdine" %>
 <%
     Cliente cliente = (Cliente) session.getAttribute("cliente");
     if (cliente == null) {
@@ -41,26 +42,41 @@
                 <p><strong>Indirizzo:</strong> <%= o.getIndirizzoSpedizione() %>, <%= o.getCitta() %>, <%= o.getCap() %></p>
                 <p><strong>Metodo di Pagamento:</strong> <%= o.getMetodoPagamento() %></p>
                 <%
-    String metodo = o.getMetodoPagamento();
-    String numeroCarta = o.getNumeroCarta();
+    				String metodo = o.getMetodoPagamento();
+    				String numeroCarta = o.getNumeroCarta();
 
-    if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) {
-        if (numeroCarta != null && numeroCarta.length() >= 4) {
-%>
-            <p><strong>Carta:</strong> **** **** **** <%= numeroCarta.substring(numeroCarta.length() - 4) %></p>
-<%
-        } else {
-%>
-            <p><strong>Carta:</strong> Nessuna</p>
-<%
-        }
-    } else if (metodo != null && metodo.equalsIgnoreCase("PayPal")) {
-        String email = o.getEmailPaypal();
-%>
-        <p><strong>Email PayPal:</strong> <%= (email != null ? email : "Nessuna") %></p>
-<%
-    }
-%>
+    				if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) {
+        			if (numeroCarta != null && numeroCarta.length() >= 4) {
+				%>
+            	<p><strong>Carta:</strong> **** **** **** <%= numeroCarta.substring(numeroCarta.length() - 4) %></p>
+				<%
+        			} else {
+				%>
+            	<p><strong>Carta:</strong> Nessuna</p>
+				<%
+        			}
+    				} else if (metodo != null && metodo.equalsIgnoreCase("PayPal")) {
+        			String email = o.getEmailPaypal();
+				%>
+        		<p><strong>Email PayPal:</strong> <%= (email != null ? email : "Nessuna") %></p>
+				<%
+    				}
+				%>
+				<%
+    				List<ElementoOrdine> prodottiOrdine = ordineDAO.doRetrieveProdottiByOrdine(o.getIdOrdine());
+				%>
+				<div class="prodotti-ordine">
+    			<p><strong>Prodotti ordinati:</strong></p>
+    			<ul>
+        		<% for (ElementoOrdine eo : prodottiOrdine) { %>
+            	<li>
+                <%= eo.getProdotto().getDescrizione() %> -
+                <%= eo.getQuantita() %> pezzi -
+                €<%= eo.getPrezzo() %> (cadauno)
+            </li>
+        	<% } %>
+    </ul>
+</div>
             </div>
         </div>
     <%

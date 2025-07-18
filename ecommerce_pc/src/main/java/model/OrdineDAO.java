@@ -192,6 +192,38 @@ public class OrdineDAO {
             e.printStackTrace();
         }
     }
+    
+    public List<ElementoOrdine> doRetrieveProdottiByOrdine(int idOrdine) {
+        List<ElementoOrdine> elementi = new ArrayList<>();
+
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT d.quantita, d.prezzo, p.* " +
+                "FROM DettaglioOrdine d JOIN Prodotto p ON d.idProdotto = p.ID_Prodotto " +
+                "WHERE d.ID_Ordine = ?");
+            ps.setInt(1, idOrdine);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Prodotto prodotto = new Prodotto();
+                prodotto.setIdProdotto(rs.getInt("ID_Prodotto"));
+                prodotto.setDescrizione(rs.getString("Descrizione"));
+                prodotto.setTipo(rs.getString("Tipo"));
+                prodotto.setPrezzo(rs.getDouble("Prezzo"));
+                prodotto.setImmagine(rs.getString("Percorso_Immagine")); // se hai il campo immagine
+
+                int quantita = rs.getInt("Quantita");
+                double prezzo = rs.getDouble("Prezzo"); // prezzo nel dettaglio ordine
+
+                elementi.add(new ElementoOrdine(prodotto, quantita, prezzo));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return elementi;
+    }
+
 
 
 }
