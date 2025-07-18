@@ -1,6 +1,7 @@
 package control;
 
 import jakarta.servlet.ServletException;
+
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,65 +18,63 @@ import model.ProdottoDAO;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import java.sql.Date;
+import java.sql.Time;
+
 @WebServlet("/ConfermaOrdineServlet")
 public class ConfermaOrdineServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
-        Cliente cliente = (Cliente) request.getSession().getAttribute("cliente");
 
-        if (carrello == null || cliente == null) {
-            response.sendRedirect("carrello.jsp");
-            return;
-        }
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Cliente cliente = (Cliente) session.getAttribute("cliente");
+		Carrello carrello = (Carrello) session.getAttribute("carrello");
 
-        Ordine ordine = new Ordine();
-        ordine.setCodiceFiscaleCliente(cliente.get_codiceFiscale());
-        ordine.setDataOrdine(new Date());
-        ordine.setTotale(carrello.getTotale());
-        ordine.setProdottiQuantita(carrello.getProdottiQuantita());
+		if (cliente == null || carrello == null || carrello.isEmpty()) {
+			response.sendRedirect("carrello.jsp");
+			return;
+		}
 
-        OrdineDAO ordineDAO = new OrdineDAO();
-        ProdottoDAO prodottoDAO = new ProdottoDAO();
+		// Dati dal form
+		String indirizzo = request.getParameter("indirizzo");
+		String citta = request.getParameter("citta");
+		String cap = request.getParameter("cap");
+		String metodoPagamento = request.getParameter("metodoPagamento");
 
-        try {
-            // Salvataggio ordine
-            ordineDAO.salvaOrdine(ordine);
+		// Crea ordine
+		Ordine ordine = new Ordine();
+		ordine.setCodiceFiscaleCliente(cliente.get_codiceFiscale());
+		ordine.setDataOrdine(java.sql.Date.valueOf(LocalDate.now()));
+		ordine.setOraOrdine(java.sql.Time.valueOf(LocalTime.now()));
+		ordine.setTotale(carrello.getTotale());
+		ordine.setIndirizzoSpedizione(indirizzo);
+		ordine.setCitta(citta);
+		ordine.setCap(cap);
+		ordine.setMetodoPagamento(metodoPagamento);
 
-            // Aggiorna quantità disponibili in magazzino
-            for (ElementoCarrello elem : carrello.getElementi()) {
-                Prodotto prodotto = elem.getProdotto();
+		OrdineDAO ordineDAO = new OrdineDAO();
+		int idOrdine = ordineDAO.doSave(ordine); // salva e restituisce ID ordine
 
-                // Leggi quantità aggiornata dal DB
-                int quantitaAttuale = prodottoDAO.getQuantitaById(prodotto.getIdProdotto());
+		// Salva dettagli
+		for (ElementoCarrello elemento : carrello.getElementi()) {
+			ordineDAO.salvaDettaglioOrdine(idOrdine, elemento.getProdotto(), elemento.getQuantita(),
+					elemento.getTotale());
+		}
 
-                int nuovaQuantita = quantitaAttuale - elem.getQuantita();
+		// Svuota carrello
+		carrello.svuota();
+		session.setAttribute("carrello", carrello);
 
-                if(nuovaQuantita < 0) {
-                    nuovaQuantita = 0; // o gestisci errore
-                }
-
-                prodottoDAO.aggiornaQuantita(prodotto.getIdProdotto(), nuovaQuantita);
-            }
-
-            // Svuota carrello
-            carrello.svuota();
-            request.getSession().setAttribute("carrello", carrello);
-
-            // Reindirizza a pagina di conferma
-            request.setAttribute("ordineConfermato", ordine);
-            request.getRequestDispatcher("ordineConfermato.jsp").forward(request, response);
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.sendRedirect("errore.jsp");
-        }
+		// Vai a pagina conferma
+		response.sendRedirect("ordineConfermato.jsp");
 	}
 
 }

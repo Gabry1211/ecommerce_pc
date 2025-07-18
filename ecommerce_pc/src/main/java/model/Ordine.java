@@ -1,14 +1,22 @@
 package model;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.math.BigDecimal;
+
+import java.sql.Date;
+import java.sql.Time;
+
 
 public class Ordine {
 	private int idOrdine;
     private String codiceFiscaleCliente;
     private Date dataOrdine;
+    private Time oraOrdine;
+    private String indirizzo;
+    private String citta;
+    private String cap;
+    private String metodo;
     private double totaleOrdine;
     private int idAssistenza;
 
@@ -48,14 +56,6 @@ public class Ordine {
         this.codiceFiscaleCliente = codiceFiscaleCliente;
     }
 
-    public Date getDataOrdine() {
-        return dataOrdine;
-    }
-
-    public void setDataOrdine(Date dataOrdine) {
-        this.dataOrdine = dataOrdine;
-    }
-
     public double getTotaleOrdine() {
         return totaleOrdine;
     }
@@ -92,5 +92,54 @@ public class Ordine {
     public void setListaProdotti(String listaProdotti) {
         this.listaProdotti = listaProdotti;
     }
+    
+    public Date getDataOrdine() {
+        return dataOrdine;
+    }
+
+    public void setDataOrdine(Date dataOrdine) {
+        this.dataOrdine = dataOrdine;
+    }
+
+    public Time getOraOrdine() {
+        return oraOrdine;
+    }
+
+    public void setOraOrdine(Time oraOrdine) {
+        this.oraOrdine = oraOrdine;
+    }
+    
+    public String getIndirizzoSpedizione() {
+    	return indirizzo;
+    }
+    
+    public void setIndirizzoSpedizione(String indirizzo) {
+    	this.indirizzo= indirizzo;
+    }
+    
+    public String getCitta() {
+    	return citta;
+    }
+    
+    public String getCap() {
+    	return cap;
+    }
+    
+    public String getMetodoPagamento() {
+    	return metodo;
+    }
+    
+    public void setCitta(String citta) {
+    	this.citta = citta;
+    }
+    
+    public void setCap(String cap) {
+    	this.cap = cap;
+    }
+    
+    public void setMetodoPagamento(String metodo) {
+    	this.metodo = metodo;
+    }
+
 
 }

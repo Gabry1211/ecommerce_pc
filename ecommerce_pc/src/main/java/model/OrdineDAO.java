@@ -1,12 +1,17 @@
 package model;
 
 import java.sql.*;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
 
 public class OrdineDAO {
 	
@@ -134,6 +139,45 @@ public class OrdineDAO {
         o.setIdAssistenza(rs.getInt("ID_Assistenza"));
         o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
         return o;
+    }
+    
+    public int doSave(Ordine ordine) {
+        String sql = "INSERT INTO Ordine (Codice_Fiscale, data_ordine, ora_ordine, Tot_Ordine, indirizzo_spedizione, citta, cap, metodo_pagamento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+            ps.setString(1, ordine.getCodiceFiscaleCliente());
+            ps.setDate(2, (Date) ordine.getDataOrdine());
+            ps.setTime(3, ordine.getOraOrdine());
+            ps.setDouble(4, ordine.getTotaleOrdine());
+            ps.setString(5, ordine.getIndirizzoSpedizione());
+            ps.setString(6, ordine.getCitta());
+            ps.setString(7, ordine.getCap());
+            ps.setString(8, ordine.getMetodoPagamento());
+
+            ps.executeUpdate();
+
+            ResultSet rs = ps.getGeneratedKeys();
+            if (rs.next())
+                return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return -1;
+    }
+    
+    public void salvaDettaglioOrdine(int idOrdine, Prodotto prodotto, int quantita, double prezzo) {
+        String sql = "INSERT INTO DettaglioOrdine (ID_Ordine, idProdotto, quantita, prezzo) VALUES (?, ?, ?, ?)";
+        try (Connection con = DBConnection.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idOrdine);
+            ps.setInt(2, prodotto.getIdProdotto());
+            ps.setInt(3, quantita);
+            ps.setDouble(4, prezzo);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

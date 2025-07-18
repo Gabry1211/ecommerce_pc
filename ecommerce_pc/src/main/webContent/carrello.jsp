@@ -114,7 +114,7 @@
 
         <button type="button" class="btn danger" onclick="svuotaCarrello()">Svuota Carrello</button>
 
-        <form action="ConfermaOrdineServlet" method="post" class="inline-form">
+        <form action="checkout.jsp" method="post" class="inline-form">
             <button type="submit" class="btn conferma">Conferma Ordine</button>
         </form>
     </div>
