@@ -142,7 +142,7 @@ public class OrdineDAO {
     }
     
     public int doSave(Ordine ordine) {
-        String sql = "INSERT INTO Ordine (Codice_Fiscale, data_ordine, ora_ordine, Tot_Ordine, indirizzo_spedizione, citta, cap, metodo_pagamento) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO Ordine (Codice_Fiscale, data_ordine, ora_ordine, Tot_Ordine, indirizzo_spedizione, citta, cap, metodo_pagamento, numero_carta, scadenza_carta, cvv, email_paypal) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = DBConnection.getConnection();
              PreparedStatement ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
@@ -154,6 +154,11 @@ public class OrdineDAO {
             ps.setString(6, ordine.getCitta());
             ps.setString(7, ordine.getCap());
             ps.setString(8, ordine.getMetodoPagamento());
+            ps.setString(9, ordine.getNumeroCarta());
+            ps.setString(10, ordine.getScadenzaCarta());
+            ps.setString(11, ordine.getCvv());
+            ps.setString(12, ordine.getEmailPaypal());
+            
 
             ps.executeUpdate();
 

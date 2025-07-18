@@ -59,6 +59,17 @@ public class ConfermaOrdineServlet extends HttpServlet {
 		ordine.setCitta(citta);
 		ordine.setCap(cap);
 		ordine.setMetodoPagamento(metodoPagamento);
+		if ("carta".equals(metodoPagamento)) {
+		    ordine.setNumeroCarta(request.getParameter("numeroCarta"));
+		    ordine.setScadenzaCarta(request.getParameter("scadenzaCarta"));
+		    ordine.setCvv(request.getParameter("cvv"));
+		    ordine.setEmailPaypal(null);
+		} else if ("paypal".equals(metodoPagamento)) {
+		    ordine.setEmailPaypal(request.getParameter("emailPaypal"));
+		    ordine.setNumeroCarta(null);
+		    ordine.setScadenzaCarta(null);
+		    ordine.setCvv(null);
+		}
 
 		OrdineDAO ordineDAO = new OrdineDAO();
 		int idOrdine = ordineDAO.doSave(ordine); // salva e restituisce ID ordine

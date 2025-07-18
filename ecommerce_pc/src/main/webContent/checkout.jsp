@@ -15,6 +15,7 @@
     <meta charset="UTF-8">
     <title>Checkout</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/paymentForm.js"></script>
 </head>
 <body>
 <jsp:include page="fragments/header.jsp" />
@@ -31,15 +32,32 @@
         <label for="cap">CAP:</label>
         <input type="text" name="cap" required>
 
-        <label for="metodoPagamento">Metodo di pagamento:</label>
-        <select name="metodoPagamento" required>
-            <option value="Carta di credito">Carta di credito</option>
-            <option value="PayPal">PayPal</option>
-            <option value="Contrassegno">Contrassegno</option>
-        </select>
+        <label>Metodo di pagamento:</label><br>
+  		<input type="radio" id="carta" name="metodoPagamento" value="carta" onclick="aggiornaForm()" checked>
+  		<label for="carta">Carta di credito</label><br>
+  		<input type="radio" id="paypal" name="metodoPagamento" value="paypal" onclick="aggiornaForm()">
+  		<label for="paypal">PayPal</label><br>
 
-        <button type="submit">Conferma Acquisto</button>
-    </form>
+  		<!-- Campi carta di credito -->
+  		<div id="cartaCreditoFields">
+    		<label for="numeroCarta">Numero Carta:</label>
+    		<input type="text" id="numeroCarta" name="numeroCarta" maxlength="16" pattern="\d{16}" required><br>
+
+    		<label for="scadenzaCarta">Data scadenza (MM/AA):</label>
+    		<input type="text" id="scadenzaCarta" name="scadenzaCarta" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}" required><br>
+
+    		<label for="cvv">CVV:</label>
+    		<input type="text" id="cvv" name="cvv" maxlength="3" pattern="\d{3}" required><br>
+  		</div>
+
+  		<!-- Campi PayPal -->
+  		<div id="paypalFields">
+    		<label for="emailPaypal">Email PayPal:</label>
+    		<input type="email" id="emailPaypal" name="emailPaypal"><br>
+  		</div>
+
+  		<input type="submit" value="Conferma ordine">
+	</form>
 </div>
 
 <jsp:include page="fragments/footer.jsp" />

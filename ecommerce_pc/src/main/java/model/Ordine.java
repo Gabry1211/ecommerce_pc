@@ -17,6 +17,10 @@ public class Ordine {
     private String citta;
     private String cap;
     private String metodo;
+    private String numeroCarta;
+    private String scadenzaCarta;
+    private String cvv;
+    private String emailPaypal;
     private double totaleOrdine;
     private int idAssistenza;
 
@@ -140,6 +144,33 @@ public class Ordine {
     public void setMetodoPagamento(String metodo) {
     	this.metodo = metodo;
     }
+    
+    public String getNumeroCarta() {
+        return numeroCarta;
+    }
+    public void setNumeroCarta(String numeroCarta) {
+        this.numeroCarta = numeroCarta;
+    }
 
+    public String getScadenzaCarta() {
+        return scadenzaCarta;
+    }
+    public void setScadenzaCarta(String scadenzaCarta) {
+        this.scadenzaCarta = scadenzaCarta;
+    }
+
+    public String getCvv() {
+        return cvv;
+    }
+    public void setCvv(String cvv) {
+        this.cvv = cvv;
+    }
+
+    public String getEmailPaypal() {
+        return emailPaypal;
+    }
+    public void setEmailPaypal(String emailPaypal) {
+        this.emailPaypal = emailPaypal;
+    }
 
 }
