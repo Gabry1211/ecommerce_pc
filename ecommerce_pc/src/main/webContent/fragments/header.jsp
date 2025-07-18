@@ -51,7 +51,7 @@
 		<%
     		String cliente = (String) session.getAttribute("cliente");
     		String currentPage1 = request.getRequestURI();
-    		if (cliente != null && currentPage.contains("clienteHome.jsp")) {
+    		if (cliente != null && currentPage1.contains("clienteHome.jsp")) {
 		%>
     <a href="storicoOrdini.jsp">Storico Ordini</a>
 		<%
