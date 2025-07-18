@@ -45,13 +45,16 @@
     				if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) { 
 				%>
     			<p><strong>Carta:</strong> **** **** **** <%= o.getNumeroCarta().substring(o.getNumeroCarta().length() - 4) %></p>
+				<% } else { %>
+        		<p><strong>Carta:</strong> Nessuna</p>
+    			<% } %>
 				<% 
-    				} else if (metodo != null && metodo.equalsIgnoreCase("PayPal")) { 
+    				if (metodo != null && metodo.equalsIgnoreCase("PayPal")) { 
 				%>
     			<p><strong>Email PayPal:</strong> <%= o.getEmailPaypal() %></p>
-				<% 
-    				} 
-				%>
+				<% } else { %>
+        		<p><strong>Email PayPal:</strong> Nessuna</p>
+    			<% } %>
             </div>
         </div>
     <%
