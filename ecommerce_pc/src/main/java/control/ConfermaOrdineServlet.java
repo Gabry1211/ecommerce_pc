@@ -42,6 +42,9 @@ public class ConfermaOrdineServlet extends HttpServlet {
 			response.sendRedirect("carrello.jsp");
 			return;
 		}
+		
+		ProdottoDAO prodottoDAO = new ProdottoDAO();
+
 
 		// Dati dal form
 		String indirizzo = request.getParameter("indirizzo");
@@ -76,8 +79,15 @@ public class ConfermaOrdineServlet extends HttpServlet {
 
 		// Salva dettagli
 		for (ElementoCarrello elemento : carrello.getElementi()) {
+			Prodotto prodotto = elemento.getProdotto();
+			int quantitaAcquistata = elemento.getQuantita();
+			
 			ordineDAO.salvaDettaglioOrdine(idOrdine, elemento.getProdotto(), elemento.getQuantita(),
 					elemento.getTotale());
+			
+			// Aggiorna quantità disponibile nel database
+		    int nuovaQuantita = prodotto.getQuantita() - quantitaAcquistata;
+		    prodottoDAO.aggiornaQuantitaDisponibile(prodotto.getIdProdotto(), nuovaQuantita);
 		}
 
 		// Svuota carrello

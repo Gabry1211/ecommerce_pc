@@ -264,6 +264,20 @@ public class ProdottoDAO {
 		    return prodotti;
 		}
 
+		public void aggiornaQuantitaDisponibile(int idProdotto, int nuovaQuantita) {
+		    String sql = "UPDATE Prodotto SET quantita = ? WHERE idProdotto = ?";
+
+		    try (Connection con = DBConnection.getConnection();
+		         PreparedStatement ps = con.prepareStatement(sql)) {
+
+		        ps.setInt(1, nuovaQuantita);
+		        ps.setInt(2, idProdotto);
+		        ps.executeUpdate();
+
+		    } catch (SQLException e) {
+		        throw new RuntimeException(e);
+		    }
+		}
 
 
 
