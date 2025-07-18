@@ -22,7 +22,7 @@ public class OrdineDAO {
 	public OrdineDAO(Connection conn) throws SQLException {
 		conn = DBConnection.getConnection();
     }
-
+	
     public void salvaOrdine(Ordine ordine) throws SQLException {
         String insertOrdineSQL = "INSERT INTO Ordine (Lista_Prodotti, Tot_Ordine, ID_Assistenza, Codice_Fiscale) VALUES (?, ?, NULL, ?)";
         // Lista_Prodotti sarà una stringa con formato: "idProdotto1:quantita1,idProdotto2:quantita2,..."
@@ -138,6 +138,14 @@ public class OrdineDAO {
         o.setTotale(rs.getDouble("Tot_Ordine"));
         o.setIdAssistenza(rs.getInt("ID_Assistenza"));
         o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
+        o.setDataOrdine(rs.getDate("data_ordine"));
+	    o.setOraOrdine(rs.getTime("ora_ordine"));
+	    o.setIndirizzoSpedizione(rs.getString("indirizzo_spedizione"));
+	    o.setCitta(rs.getString("citta"));
+	    o.setCap(rs.getString("cap"));
+	    o.setMetodoPagamento(rs.getString("metodo_pagamento"));
+	    o.setNumeroCarta(rs.getString("numero_carta"));
+	    o.setEmailPaypal(rs.getString("email_paypal"));
         return o;
     }
     

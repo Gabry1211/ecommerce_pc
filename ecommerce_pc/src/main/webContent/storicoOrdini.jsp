@@ -18,7 +18,7 @@
 <html>
 <head>
     <title>Storico Ordini</title>
-    <link rel="stylesheet" href="styles/storicoOrdini.css">
+    <link rel="stylesheet" href="styles/style.css">
 </head>
 <body>
 <jsp:include page="fragments/header.jsp" />
