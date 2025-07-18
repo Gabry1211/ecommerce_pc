@@ -40,21 +40,27 @@
                 <p><strong>Ora:</strong> <%= o.getOraOrdine() %></p>
                 <p><strong>Indirizzo:</strong> <%= o.getIndirizzoSpedizione() %>, <%= o.getCitta() %>, <%= o.getCap() %></p>
                 <p><strong>Metodo di Pagamento:</strong> <%= o.getMetodoPagamento() %></p>
-                <% 
-    				String metodo = o.getMetodoPagamento();
-    				if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) { 
-				%>
-    			<p><strong>Carta:</strong> **** **** **** <%= o.getNumeroCarta().substring(o.getNumeroCarta().length() - 4) %></p>
-				<% } else { %>
-        		<p><strong>Carta:</strong> Nessuna</p>
-    			<% } %>
-				<% 
-    				if (metodo != null && metodo.equalsIgnoreCase("PayPal")) { 
-				%>
-    			<p><strong>Email PayPal:</strong> <%= o.getEmailPaypal() %></p>
-				<% } else { %>
-        		<p><strong>Email PayPal:</strong> Nessuna</p>
-    			<% } %>
+                <%
+    String metodo = o.getMetodoPagamento();
+    String numeroCarta = o.getNumeroCarta();
+
+    if (metodo != null && metodo.equalsIgnoreCase("Carta di Credito")) {
+        if (numeroCarta != null && numeroCarta.length() >= 4) {
+%>
+            <p><strong>Carta:</strong> **** **** **** <%= numeroCarta.substring(numeroCarta.length() - 4) %></p>
+<%
+        } else {
+%>
+            <p><strong>Carta:</strong> Nessuna</p>
+<%
+        }
+    } else if (metodo != null && metodo.equalsIgnoreCase("PayPal")) {
+        String email = o.getEmailPaypal();
+%>
+        <p><strong>Email PayPal:</strong> <%= (email != null ? email : "Nessuna") %></p>
+<%
+    }
+%>
             </div>
         </div>
     <%
