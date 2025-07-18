@@ -41,13 +41,13 @@
   		<!-- Campi carta di credito -->
   		<div id="cartaCreditoFields">
     		<label for="numeroCarta">Numero Carta:</label>
-    		<input type="text" id="numeroCarta" name="numeroCarta" maxlength="16" pattern="\d{16}" required><br>
+    		<input type="text" id="numeroCarta" name="numeroCarta" maxlength="16" pattern="\d{16}"><br>
 
     		<label for="scadenzaCarta">Data scadenza (MM/AA):</label>
-    		<input type="text" id="scadenzaCarta" name="scadenzaCarta" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}" required><br>
+    		<input type="text" id="scadenzaCarta" name="scadenzaCarta" placeholder="MM/AA" pattern="(0[1-9]|1[0-2])\/\d{2}"><br>
 
     		<label for="cvv">CVV:</label>
-    		<input type="text" id="cvv" name="cvv" maxlength="3" pattern="\d{3}" required><br>
+    		<input type="text" id="cvv" name="cvv" maxlength="3" pattern="\d{3}"><br>
   		</div>
 
   		<!-- Campi PayPal -->
