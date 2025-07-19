@@ -17,13 +17,6 @@
       <a href="index.jsp">TechZone</a>
     </div>
 
-    <div class="search-bar">
-      <form action="RicercaProdottiServlet" method="get">
-        <input type="text" name="query" placeholder="Cerca prodotti..." required />
-        <button type="submit">Cerca</button>
-      </form>
-    </div>
-
 <div class="nav-buttons">
     <a href="index.jsp">Home</a>
 
@@ -36,9 +29,9 @@
 
     <% if (showLogout) { %>
         <a href="LogoutServlet">Esci</a>
-    <% } 
-    	String uri = request.getRequestURI();
-    	if (uri != null && uri.endsWith("index.jsp")) {
+    <% }
+    	Boolean mostraLogin = (Boolean) request.getAttribute("mostraLogin");
+    	if (mostraLogin != null && mostraLogin) {
 	%>
     	<a href="login.jsp">Accedi</a>
     	<a href="registrazione.jsp">Registrati</a>
@@ -46,7 +39,7 @@
     	}
 	%>
 
-    <a href="carrello.jsp">Carrello (<span id="carrelloCounter">
+    <a href="carrello.jsp">🛒 Carrello (<span id="carrelloCounter">
     	<% 
         	model.Carrello carrello = (model.Carrello) session.getAttribute("carrello");
         	out.print(carrello != null ? carrello.getTotaleQuantita() : 0);

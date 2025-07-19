@@ -32,17 +32,6 @@
 %>
 <jsp:include page="fragments/header.jsp" />
 
-<!-- 🔍 Barra di ricerca e carrello -->
-<div class="top-bar">
-    <form action="CercaProdottiServlet" method="get" class="search-bar">
-        <input type="text" name="query" placeholder="Cerca prodotti..." required>
-        <button type="submit">🔍 Cerca</button>
-    </form>
-    <div class="carrello-link">
-        <a href="carrello.jsp">🛒 Carrello</a>
-    </div>
-</div>
-
 <!-- 🖥️ Sezione Prodotti dinamica -->
 <section class="sezione-prodotti">
     <h2>⭐ Prodotti Disponibili</h2>
