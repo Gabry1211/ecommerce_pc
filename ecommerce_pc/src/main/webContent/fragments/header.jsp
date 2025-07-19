@@ -36,10 +36,15 @@
 
     <% if (showLogout) { %>
         <a href="LogoutServlet">Esci</a>
-    <% } else { %>
-        <a href="login.jsp">Accedi</a>
-        <a href="registrazione.jsp">Registrati</a>
-    <% } %>
+    <% } 
+    	String uri = request.getRequestURI();
+    	if (uri != null && uri.endsWith("index.jsp")) {
+	%>
+    	<a href="login.jsp">Accedi</a>
+    	<a href="registrazione.jsp">Registrati</a>
+	<%
+    	}
+	%>
 
     <a href="carrello.jsp">Carrello (<span id="carrelloCounter">
     	<% 
