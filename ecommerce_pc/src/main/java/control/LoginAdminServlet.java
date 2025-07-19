@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.Amministratore;
+import model.AmministratoreDAO;
 
 import java.io.IOException;
 import java.sql.*;
@@ -17,34 +19,24 @@ public class LoginAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 String codiceFiscale = request.getParameter("codiceFiscale");
-	        String password = request.getParameter("password");
+		String codiceFiscale = request.getParameter("codiceFiscale");
+        String password = request.getParameter("password");
 
-	        try {
-	            Context initContext = new InitialContext();
-	            DataSource ds = (DataSource) initContext.lookup("java:comp/env/jdbc/sito");
-	            Connection
-	            conn = ds.getConnection();
+        try {
+            AmministratoreDAO dao = new AmministratoreDAO();
+            Amministratore admin = dao.doLogin(codiceFiscale, password);
 
-	            String query = "SELECT * FROM Login WHERE Codice_Fiscale_Amministratore = ? AND Password = ?";
-	            PreparedStatement stmt = conn.prepareStatement(query);
-	            stmt.setString(1, codiceFiscale);
-	            stmt.setString(2, password);
-	            ResultSet rs = stmt.executeQuery();
-
-	            if (rs.next()) {
-	                HttpSession session = request.getSession();
-	                session.setAttribute("admin", codiceFiscale);
-	                response.sendRedirect("adminHome.jsp");
-	            } else {
-	                request.setAttribute("erroreLogin", "Credenziali errate");
-	                request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
-	            }
-
-	            conn.close();
-	        } catch (Exception e) {
-	            throw new ServletException("Errore login admin", e);
-	        }
+            if (admin != null) {
+                HttpSession session = request.getSession();
+                session.setAttribute("admin", admin);
+                response.sendRedirect("adminHome.jsp");
+            } else {
+                request.setAttribute("erroreLogin", "Credenziali errate");
+                request.getRequestDispatcher("loginAdmin.jsp").forward(request, response);
+            }
+        } catch (Exception e) {
+            throw new ServletException("Errore durante il login dell'amministratore", e);
+        }
 	}
 
 }

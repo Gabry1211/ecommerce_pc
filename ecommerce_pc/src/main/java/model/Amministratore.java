@@ -7,6 +7,7 @@ public class Amministratore {
     private String email;
     private int eta;
     private java.sql.Date dataDiNascita;
+    private String password;
 
     // Getter e Setter
     public String getCodiceFiscale() { 
@@ -55,6 +56,14 @@ public class Amministratore {
     
     public void setDataDiNascita(java.sql.Date dataDiNascita) {
     	this.dataDiNascita = dataDiNascita;
+    }
+    
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 }

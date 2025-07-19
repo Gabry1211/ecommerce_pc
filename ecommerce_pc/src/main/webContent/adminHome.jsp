@@ -4,7 +4,7 @@
 <%@ page session="true" %>
 <!DOCTYPE html>
 <%
-    Amministratore admin = (Amministratore) session.getAttribute("amministratore");
+    Amministratore admin = (Amministratore) session.getAttribute("admin");
     if (admin == null) {
         response.sendRedirect("loginAdmin.jsp");
         return;
