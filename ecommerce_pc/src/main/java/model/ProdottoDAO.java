@@ -25,12 +25,9 @@ public class ProdottoDAO {
 	    }
 		
 		public List<Prodotto> doRetrieveAll() {
-		    List<Prodotto> prodotti = new ArrayList<>();
-
-		    String sql = "SELECT * FROM prodotto";
-
+			List<Prodotto> prodotti = new ArrayList<>();
 		    try (Connection con = DBConnection.getConnection();
-		         PreparedStatement ps = con.prepareStatement(sql);
+		         PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto");
 		         ResultSet rs = ps.executeQuery()) {
 
 		        while (rs.next()) {
@@ -39,15 +36,15 @@ public class ProdottoDAO {
 		            p.setDescrizione(rs.getString("Descrizione"));
 		            p.setPrezzo(rs.getDouble("Prezzo"));
 		            p.setTipo(rs.getString("Tipo"));
-		            p.setImmagine(rs.getString("Percorso_Immagine")); // importante per mostrare l'immagine
-
+		            p.setImmagine(rs.getString("Immagine"));
+		            p.setQuantita(rs.getInt("Quantita"));
+		            p.setIdVenditore(rs.getInt("ID_Venditore"));
+		            p.setCfAdmin(rs.getString("Codice_Fiscale_Amministratore"));
 		            prodotti.add(p);
 		        }
-
 		    } catch (SQLException e) {
 		        e.printStackTrace();
 		    }
-
 		    return prodotti;
 		}
 
