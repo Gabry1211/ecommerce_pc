@@ -834,3 +834,26 @@ input[type="number"] {
 .admin-btn-elimina {
     background-color: #dc3545;
 }
+
+.card-ordine {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.card-ordine h3 {
+    margin-top: 0;
+    color: #111;
+}
+
+.card-ordine ul {
+    list-style: none;
+    padding: 0;
+}
+
+.card-ordine li {
+    padding: 4px 0;
+}
