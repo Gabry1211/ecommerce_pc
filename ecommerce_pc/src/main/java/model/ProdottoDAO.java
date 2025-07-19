@@ -51,7 +51,7 @@ public class ProdottoDAO {
 		                p.setIdVenditore(idVenditore);
 		            }
 
-		            String cfAdmin = rs.getString("CF_Admin");
+		            String cfAdmin = rs.getString("Codice_Fiscale_Admin");
 		            if (cfAdmin != null) {
 		                p.setCfAdmin(cfAdmin);
 		            }
