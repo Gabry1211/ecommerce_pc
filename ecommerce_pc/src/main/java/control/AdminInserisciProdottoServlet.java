@@ -1,6 +1,7 @@
 package control;
 
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.MultipartConfig;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import java.nio.file.Paths;
 import java.sql.SQLException;
 
 @WebServlet("/AdminInserisciProdottoServlet")
+@MultipartConfig
 public class AdminInserisciProdottoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -39,6 +41,11 @@ public class AdminInserisciProdottoServlet extends HttpServlet {
 
         // Upload immagine
         Part filePart = request.getPart("immagine");
+        if (filePart == null || filePart.getSubmittedFileName() == null || filePart.getSubmittedFileName().trim().isEmpty()) {
+            request.setAttribute("errore", "Errore nel caricamento dell'immagine.");
+            request.getRequestDispatcher("adminInserisciProdotto.jsp").forward(request, response);
+            return;
+        }
         String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
 
         String uploadPath = "C:/upload_ecommerce/";
