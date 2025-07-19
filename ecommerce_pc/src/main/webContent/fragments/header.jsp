@@ -58,14 +58,6 @@
 </div>
 
   </nav>
-
-  <div class="categories-menu">
-    <a href="categoria.jsp?cat=componenti">Componenti</a>
-    <a href="categoria.jsp?cat=pc_fissi">PC Fissi</a>
-    <a href="categoria.jsp?cat=accessori">Accessori</a>
-    <a href="categoria.jsp?cat=offerte">Offerte</a>
-    <a href="categoria.jsp?cat=novita">Novità</a>
-  </div>
 </header>
 
 <!-- Il resto della pagina -->

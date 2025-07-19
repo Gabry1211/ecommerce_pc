@@ -26,20 +26,6 @@
             <% } %>
         </div>
     </section>
-
-    <!-- Sezione per Categoria -->
-    <section class="section-categorie">
-        <h3>🗂️ Categorie</h3>
-        <div class="categorie-container">
-            <a href="VisualizzaProdottiServlet?tipo=PC" class="categoria-card">🖥️ PC</a>
-            <a href="VisualizzaProdottiServlet?tipo=SSD" class="categoria-card">💾 SSD</a>
-            <a href="VisualizzaProdottiServlet?tipo=GPU" class="categoria-card">🎮 GPU</a>
-            <a href="VisualizzaProdottiServlet?tipo=RAM" class="categoria-card">🧠 RAM</a>
-            <a href="VisualizzaProdottiServlet?tipo=HDD" class="categoria-card">📀 HDD</a>
-            <a href="VisualizzaProdottiServlet?tipo=Alimentatore" class="categoria-card">⚡ PSU</a>
-            <a href="VisualizzaProdottiServlet?tipo=Scheda Madre" class="categoria-card">🧩 Schede Madri</a>
-        </div>
-    </section>
 </div>
 
 <%@ include file="fragments/footer.jsp" %>
