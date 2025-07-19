@@ -36,7 +36,7 @@ public class ProdottoDAO {
 		            p.setDescrizione(rs.getString("Descrizione"));
 		            p.setPrezzo(rs.getDouble("Prezzo"));
 		            p.setTipo(rs.getString("Tipo"));
-		            p.setImmagine(rs.getString("Immagine"));
+		            p.setImmagine(rs.getString("Percorso_Immagine"));
 		            p.setQuantita(rs.getInt("Quantita"));
 		            p.setIdVenditore(rs.getInt("ID_Venditore"));
 		            p.setCfAdmin(rs.getString("Codice_Fiscale_Amministratore"));
