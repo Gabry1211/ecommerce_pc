@@ -858,12 +858,12 @@ input[type="number"] {
     padding: 4px 0;
 }
 
-/* === LAYOUT GENERALE RESPONSIVO === */
+/* === LAYOUT GENERALE (DESKTOP-FIRST) === */
 body {
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f4f4f4;
     margin: 0;
     padding: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background-color: #f8f8f8;
 }
 
 .container {
@@ -873,56 +873,59 @@ body {
     padding: 20px;
 }
 
-/* === HEADER RESPONSIVO === */
+/* === HEADER === */
 header {
     display: flex;
-    flex-wrap: wrap;
-    align-items: center;
     justify-content: space-between;
+    align-items: center;
     background-color: #232f3e;
     color: white;
-    padding: 10px 20px;
+    padding: 15px 30px;
 }
 
 header .logo {
-    font-size: 1.5em;
+    font-size: 1.8em;
     font-weight: bold;
 }
 
 header nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
+    gap: 15px;
 }
 
 header nav a {
     color: white;
     text-decoration: none;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border-radius: 4px;
     background-color: #37475a;
+    font-size: 14px;
 }
 
 header nav a:hover {
     background-color: #485769;
 }
 
-/* === CARD DI PRODOTTI (tipo Amazon) === */
+/* === CARD PRODOTTI (STILE AMAZON) === */
 .card-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(3, 1fr); /* 3 card per riga su desktop */
+    gap: 25px;
+    margin-top: 30px;
+    padding: 10px 0;
 }
 
 .card {
     background-color: white;
     border: 1px solid #ddd;
-    border-radius: 8px;
+    border-radius: 6px;
     padding: 16px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
     transition: box-shadow 0.3s;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    align-items: center;
+    height: 100%;
 }
 
 .card:hover {
@@ -930,15 +933,15 @@ header nav a:hover {
 }
 
 .card img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 220px;
     object-fit: contain;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 
 /* === BOTTONI === */
 .btn {
-    padding: 10px 16px;
+    padding: 10px 18px;
     background-color: #f0c14b;
     border: 1px solid #a88734;
     border-radius: 4px;
@@ -946,6 +949,7 @@ header nav a:hover {
     font-weight: bold;
     color: #111;
     text-align: center;
+    font-size: 14px;
 }
 
 .btn:hover {
@@ -962,39 +966,75 @@ header nav a:hover {
     background-color: #c9302c;
 }
 
-/* === RESPONSIVE MEDIA QUERIES === */
-@media (max-width: 768px) {
+/* === MEDIA QUERIES (ADATTAMENTO MOBILE) === */
+@media (max-width: 1080px) {
+    .card-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
     header {
         flex-direction: column;
         align-items: flex-start;
     }
 
     header nav {
-        flex-direction: column;
-        width: 100%;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    .btn {
-        width: 100%;
-        margin-top: 10px;
+        flex-wrap: wrap;
     }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 1024px) {
     .card-container {
-        grid-template-columns: 1fr;
+        grid-template-columns: repeat(2, 1fr); /* Tablet: 2 card per riga */
+    }
+}
+
+@media (max-width: 768px) {
+    .card-container {
+        grid-template-columns: 1fr; /* Mobile: 1 per riga */
+    }
+
+    .card img {
+        height: 180px;
     }
 
     .card {
-        padding: 12px;
-    }
-
-    .btn {
-        font-size: 14px;
-        padding: 8px;
+        padding: 14px;
     }
 }
+
+.card-container, .homepage-cards, .admin-product-grid, .griglia-prodotti {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+/* Imposta max-width per controllare larghezza su desktop */
+.card-prodotto, .admin-product-card {
+  max-width: 320px;
+}
+
+/* --- Tablet (fino a 1024px) --- */
+@media (max-width: 1024px) {
+  .card-container, .homepage-cards, .admin-product-grid, .griglia-prodotti {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  }
+}
+
+/* --- Mobile (fino a 600px) --- */
+@media (max-width: 600px) {
+  .card-container, .homepage-cards, .admin-product-grid, .griglia-prodotti {
+    grid-template-columns: 1fr;
+  }
+  .card-prodotto, .admin-product-card {
+    max-width: none;
+    width: 100%;
+  }
+}
+
+/* Optional: center cards on very large screens */
+@media (min-width: 1600px) {
+  .card-container, .homepage-cards, .admin-product-grid, .griglia-prodotti {
+    justify-content: center;
+  }
+}
+
