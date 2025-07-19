@@ -24,11 +24,18 @@ public class ProdottoDAO {
 	        conn.close();
 	    }
 		
-		public List<Prodotto> doRetrieveAll() {
-			List<Prodotto> prodotti = new ArrayList<>();
-		    try (Connection con = DBConnection.getConnection();
-		         PreparedStatement ps = con.prepareStatement("SELECT * FROM Prodotto");
-		         ResultSet rs = ps.executeQuery()) {
+		public List<Prodotto> doRetrieveAll() throws SQLException {
+		    List<Prodotto> prodotti = new ArrayList<>();
+		    Connection con = null;
+		    PreparedStatement ps = null;
+		    ResultSet rs = null;
+
+		    String query = "SELECT * FROM Prodotto";
+
+		    try {
+		        con = DBConnection.getConnection();
+		        ps = con.prepareStatement(query);
+		        rs = ps.executeQuery();
 
 		        while (rs.next()) {
 		            Prodotto p = new Prodotto();
@@ -36,25 +43,46 @@ public class ProdottoDAO {
 		            p.setDescrizione(rs.getString("Descrizione"));
 		            p.setPrezzo(rs.getDouble("Prezzo"));
 		            p.setTipo(rs.getString("Tipo"));
-		            p.setImmagine(rs.getString("Percorso_Immagine"));
 		            p.setQuantita(rs.getInt("Quantita"));
-		            p.setIdVenditore(rs.getInt("ID_Venditore"));
-		            p.setCfAdmin(rs.getString("Codice_Fiscale_Amministratore"));
+		            p.setImmagine(rs.getString("Percorso_Immagine"));
+
+		            int idVenditore = rs.getInt("ID_Venditore");
+		            if (!rs.wasNull()) {
+		                p.setIdVenditore(idVenditore);
+		            }
+
+		            String cfAdmin = rs.getString("CF_Admin");
+		            if (cfAdmin != null) {
+		                p.setCfAdmin(cfAdmin);
+		            }
+
 		            prodotti.add(p);
 		        }
-		    } catch (SQLException e) {
-		        e.printStackTrace();
+		    } finally {
+		        if (rs != null) try { rs.close(); } catch (SQLException ignored) {}
+		        if (ps != null) try { ps.close(); } catch (SQLException ignored) {}
+		        if (con != null) try { con.close(); } catch (SQLException ignored) {}
 		    }
+
 		    return prodotti;
 		}
+
 
 		
 		public void doSave(Prodotto prodotto) throws SQLException {
 		    Connection con = null;
 		    PreparedStatement ps = null;
 
-		    String query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, ID_Venditore, Percorso_Immagine, Quantita) " +
-		                   "VALUES (?, ?, ?, ?, ?, ?)";
+		    String query;
+		    boolean isAdmin = prodotto.getCfAdmin() != null && !prodotto.getCfAdmin().isEmpty();
+
+		    if (isAdmin) {
+		        query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, Codice_Fiscale_Amministratore, Percorso_Immagine, Quantita) " +
+		                "VALUES (?, ?, ?, ?, ?, ?)";
+		    } else {
+		        query = "INSERT INTO Prodotto (Descrizione, Prezzo, Tipo, ID_Venditore, Percorso_Immagine, Quantita) " +
+		                "VALUES (?, ?, ?, ?, ?, ?)";
+		    }
 
 		    try {
 		        con = DBConnection.getConnection();
@@ -63,7 +91,13 @@ public class ProdottoDAO {
 		        ps.setString(1, prodotto.getDescrizione());
 		        ps.setDouble(2, prodotto.getPrezzo());
 		        ps.setString(3, prodotto.getTipo());
-		        ps.setInt(4, prodotto.getIdVenditore());
+
+		        if (isAdmin) {
+		            ps.setString(4, prodotto.getCfAdmin());
+		        } else {
+		            ps.setInt(4, prodotto.getIdVenditore());
+		        }
+
 		        ps.setString(5, prodotto.getImmagine());
 		        ps.setInt(6, prodotto.getQuantita());
 
@@ -73,6 +107,7 @@ public class ProdottoDAO {
 		        if (con != null) try { con.close(); } catch (SQLException ignored) {}
 		    }
 		}
+
 
 
 		
