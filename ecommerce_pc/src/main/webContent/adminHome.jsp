@@ -45,7 +45,7 @@
                 <p>Tipo: <%= p.getTipo() %></p>
                 <p>Quantità: <%= p.getQuantita() %></p>
                 <a href="adminModificaProdotto.jsp?id=<%= p.getIdProdotto() %>" class="btn-modifica">✏️ Modifica</a>
-                <a href="EliminaProdottoServlet?id=<%= p.getIdProdotto() %>" class="btn-elimina" onclick="return confirm('Sei sicuro di voler eliminare questo prodotto?');">🗑️ Elimina</a>
+                <a href="AdminEliminaProdottoServlet?id=<%= p.getIdProdotto() %>" class="btn-elimina">🗑️ Elimina</a>
             </div>
         <% } %>
     </div>
