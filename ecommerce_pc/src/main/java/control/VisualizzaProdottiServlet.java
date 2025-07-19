@@ -6,6 +6,7 @@ import model.Prodotto;
 import model.ProdottoDAO;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -18,7 +19,12 @@ public class VisualizzaProdottiServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		List<Prodotto> prodotti = new ProdottoDAO().doRetrieveAll();
+		List<Prodotto> prodotti = null;
+		try {
+			prodotti = new ProdottoDAO().doRetrieveAll();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         request.setAttribute("prodotti", prodotti);
         RequestDispatcher dispatcher = request.getRequestDispatcher("gestioneProdotti.jsp");
         dispatcher.forward(request, response);
