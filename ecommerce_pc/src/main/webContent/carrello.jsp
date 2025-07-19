@@ -8,65 +8,7 @@
     <meta charset="UTF-8">
     <title>Carrello</title>
     <link rel="stylesheet" href="css/style.css">
-    <script>
-    function aggiornaQuantita(idProdotto) {
-        var quantitaInput = document.getElementById("qta-" + idProdotto);
-        if (!quantitaInput) {
-            console.error("Elemento input quantità non trovato per idProdotto: " + idProdotto);
-            return;
-        }
-        var nuovaQuantita = quantitaInput.value;
-
-        // Esempio: AJAX per aggiornare quantità nel carrello (usa XMLHttpRequest o fetch)
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "AggiornaQuantitaAjaxServlet", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Puoi gestire risposta, aggiornare UI ecc.
-                console.log("Quantità aggiornata con successo");
-                location.reload();  // o aggiornare dinamicamente senza ricaricare
-            }
-        };
-
-        xhr.send("idProdotto=" + encodeURIComponent(idProdotto) + "&quantita=" + encodeURIComponent(nuovaQuantita));
-    }
-    
-    function rimuoviProdotto(idProdotto) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "RimuoviDalCarrelloServlet", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Rimuove direttamente l'elemento dal DOM
-                var item = document.getElementById("item-" + idProdotto);
-                if (item) item.remove();
-
-                // Aggiorna il totale oppure ricarica
-                location.reload();
-            }
-        };
-
-        xhr.send("idProdotto=" + encodeURIComponent(idProdotto));
-    }
-    function svuotaCarrello() {
-        var xhr = new XMLHttpRequest();
-        xhr.open("POST", "SvuotaCarrelloAjaxServlet", true);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4 && xhr.status === 200) {
-                // Rimuove tutti gli elementi dal DOM e aggiorna il totale
-                document.querySelector(".carrello-items").innerHTML = "<h3>Il carrello è vuoto</h3>";
-                document.querySelector(".carrello-totale").innerHTML = "";
-            }
-        };
-
-        xhr.send(); // Nessun parametro necessario
-    }
-</script>
+    <script src="scripts/carrello.js"></script>
 </head>
 <body>
 
