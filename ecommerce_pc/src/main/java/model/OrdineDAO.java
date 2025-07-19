@@ -224,6 +224,74 @@ public class OrdineDAO {
         return elementi;
     }
 
+    public List<DettaglioOrdine> doRetrieveDettagliById(int idOrdine) {
+        List<DettaglioOrdine> dettagli = new ArrayList<>();
 
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement("SELECT * FROM DettaglioOrdine WHERE ID_Ordine = ?");
+            ps.setInt(1, idOrdine);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                DettaglioOrdine d = new DettaglioOrdine();
+                d.setIdOrdine(rs.getInt("ID_Ordine"));
+                d.setIdProdotto(rs.getInt("idProdotto"));
+                d.setQuantita(rs.getInt("quantita"));
+                d.setPrezzo(rs.getDouble("prezzo"));
+                dettagli.add(d);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dettagli;
+    }
+    
+    public List<Ordine> doRetrieveByDateRange(Date inizio, Date fine) {
+        List<Ordine> ordini = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM Ordine WHERE data_ordine BETWEEN ? AND ? ORDER BY data_ordine DESC");
+            ps.setDate(1, inizio);
+            ps.setDate(2, fine);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ordine o = new Ordine();
+                o.setIdOrdine(rs.getInt("ID_Ordine"));
+                o.setDataOrdine(rs.getDate("data_ordine"));
+                o.setOraOrdine(rs.getTime("ora_ordine"));
+                o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
+                ordini.add(o);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
+
+    public List<Ordine> doRetrieveByDateRangeAndCliente(Date inizio, Date fine, String cfCliente) {
+        List<Ordine> ordini = new ArrayList<>();
+        try (Connection con = DBConnection.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                "SELECT * FROM Ordine WHERE data_ordine BETWEEN ? AND ? AND Codice_Fiscale = ? ORDER BY data_ordine DESC");
+            ps.setDate(1, inizio);
+            ps.setDate(2, fine);
+            ps.setString(3, cfCliente);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ordine o = new Ordine();
+                o.setIdOrdine(rs.getInt("ID_Ordine"));
+                o.setDataOrdine(rs.getDate("data_ordine"));
+                o.setOraOrdine(rs.getTime("ora_ordine"));
+                o.setCodiceFiscaleCliente(rs.getString("Codice_Fiscale"));
+                ordini.add(o);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return ordini;
+    }
 
 }

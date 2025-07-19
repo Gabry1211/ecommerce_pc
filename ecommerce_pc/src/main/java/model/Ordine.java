@@ -1,11 +1,15 @@
 package model;
 
 import java.util.HashMap;
+
 import java.util.Map;
 import java.math.BigDecimal;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
+import java.util.List;
+
 
 
 public class Ordine {
@@ -23,6 +27,7 @@ public class Ordine {
     private String emailPaypal;
     private double totaleOrdine;
     private int idAssistenza;
+    private List<DettaglioOrdine> dettagli;
 
     // Lista prodotti in formato stringa (es: "1:2,3:1")
     private String listaProdotti;
@@ -171,6 +176,14 @@ public class Ordine {
     }
     public void setEmailPaypal(String emailPaypal) {
         this.emailPaypal = emailPaypal;
+    }
+    
+    public List<DettaglioOrdine> getDettagli() {
+        return dettagli;
+    }
+
+    public void setDettagli(List<DettaglioOrdine> dettagli) {
+        this.dettagli = dettagli;
     }
 
 }
