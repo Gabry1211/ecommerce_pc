@@ -1,0 +1,27 @@
+# File compilati Java
+*.class
+
+# Cartelle di build
+bin/
+build/
+target/
+out/
+
+# Eclipse
+.metadata/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+.recommenders
+
+# Tomcat
+Servers/
+
+# Log
+*.log
+
+# File sistema operativo
+.DS_Store
+Thumbs.db
