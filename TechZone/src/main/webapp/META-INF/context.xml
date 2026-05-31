@@ -1,0 +1,13 @@
+<Context>
+  <Resource name="jdbc/TechZoneDB"
+            auth="Container"
+            type="javax.sql.DataSource"
+            factory="org.apache.tomcat.jdbc.pool.DataSourceFactory"
+            driverClassName="com.mysql.cj.jdbc.Driver"
+            url="jdbc:mysql://localhost:3306/sito?useSSL=false&amp;serverTimezone=UTC&amp;allowPublicKeyRetrieval=true"
+            username="root"
+            password="mysqlmerda"
+            maxTotal="20"
+            maxIdle="10"
+            maxWaitMillis="10000"/>
+</Context>
